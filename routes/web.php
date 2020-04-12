@@ -16,3 +16,6 @@ Route::get('/', function () {
 });
 
 Route::get('countries-census/process', 'CountryController@process');
+Route::get('email/preview', 'HomeController@previewEmail');
+Route::get('email/send', 'HomeController@sendEmailSynchronously');
+Route::get('email/send-via-queued', 'HomeController@sendEmailQueued');

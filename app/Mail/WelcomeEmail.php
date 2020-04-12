@@ -11,14 +11,16 @@ class WelcomeEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    protected $email_data;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+        $this->email_data = $data;
     }
 
     /**
@@ -29,6 +31,6 @@ class WelcomeEmail extends Mailable
     public function build()
     {
         return $this->from('abc@gmail.com')
-                ->view('emails.welcome-email');
+                ->view('emails.welcome-email-template')->with($this->email_data);
     }
 }
