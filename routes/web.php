@@ -19,3 +19,7 @@ Route::get('countries-census/process', 'CountryController@process');
 Route::get('email/preview', 'HomeController@previewEmail');
 Route::get('email/send', 'HomeController@sendEmailSynchronously');
 Route::get('email/send-via-queued', 'HomeController@sendEmailQueued');
+
+// Send Attachment
+Route::get('email/send-with-attachment', 'HomeController@sendEmailWithAttachment');
+Route::get('email/send-with-multiple-attachments', 'HomeController@sendEmailWithMultipleAttachments');
