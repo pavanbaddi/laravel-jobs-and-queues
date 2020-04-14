@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\PurchaseInvoiceInformation;
+use App\Mail\SubscriptionRenewal;
 use App\Mail\WelcomeEmail;
 use Illuminate\Http\Request;
 use Mail;
@@ -78,4 +79,7 @@ class HomeController extends Controller
         return Mail::to($data['to'])->send(new PurchaseInvoiceInformation($data));
     }
     
+    public function emailOfSubscriptionRenewal(){
+        return (new SubscriptionRenewal());
+    }
 }
