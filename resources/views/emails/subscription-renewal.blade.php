@@ -1,36 +1,35 @@
-@component('mail::message')
+@component('mail::layout')
+{{-- Header --}}
 
-# Heading 1
-## Heading 2
-### Heading 3
-#### Heading 4
-##### Heading 5
-###### Heading 6
+@slot('header')
+@component('mail::header', ['url' => config('app.url')])
+The Code Learner
+@endcomponent
+@endslot
 
-This is a sentence
+# Renewal Subscription Plan
 
-This is a sentence with **bolded text**.
+##### **Dear Customer**,
+A gentle remainder for informing you about you'r annual subscription plan comming to end.<br>
 
-@component('mail::button', ['url' => '', 'color' => 'success'])
-Button One
+### You can choose Plans from below.
+
+@component('mail::table')
+| Single Plan   | Premium Plan  | Business Plan |
+| ------------- |:-------------:| -------------:|
+| Feature 1     | Feature 1     | Feature 1     |
+| Feature 2     | Feature 2     | Feature 2     |
+| <a href="#" class="button button-success" >Purchase</a>     | <a href="#" class="button button-success" >Purchase</a>     | <a href="#" class="button button-success" >Purchase</a>    |
 @endcomponent
 
 @component('mail::button', ['url' => '', 'color' => 'primary'])
-Button Two
+Go to Account
 @endcomponent
 
-@component('mail::panel')
-This is the panel content.
+{{-- Footer --}}
+@slot('footer')
+@component('mail::footer')
+© {{ date('Y') }} The Code Learners. @lang('All rights reserved.')
 @endcomponent
-
-@component('mail::table')
-| Items             | Quantity  | Total Price  |
-| ------------------|:---------:|-------------:|
-| Apple Iphone 10x  | 1 Nos     | $1200.00     |
-| Backcase cover    | 2 Nos     | $15.00       |
-| Total             | 3 Nos     | $1215.00     |
-@endcomponent
-
-Thanks,<br>
-{{ config('app.name') }}
+@endslot
 @endcomponent

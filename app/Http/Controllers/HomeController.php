@@ -8,7 +8,7 @@ use App\Mail\WelcomeEmail;
 use Illuminate\Http\Request;
 use Mail;
 class HomeController extends Controller
-{
+{ 
     public function previewEmail(Request $request){
         $data = [
             "company_name" => "The Code Learners",
@@ -81,5 +81,9 @@ class HomeController extends Controller
     
     public function emailOfSubscriptionRenewal(){
         return (new SubscriptionRenewal());
+    }
+
+    public function createForm(){
+        return view('product.create_form');
     }
 }

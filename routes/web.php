@@ -24,3 +24,6 @@ Route::get('email/send-via-queued', 'HomeController@sendEmailQueued');
 Route::get('email/send-with-attachment', 'HomeController@sendEmailWithAttachment');
 Route::get('email/send-with-multiple-attachments', 'HomeController@sendEmailWithMultipleAttachments');
 Route::get('email/email-of-subscription-renewal', 'HomeController@emailOfSubscriptionRenewal');
+
+// Routes
+
