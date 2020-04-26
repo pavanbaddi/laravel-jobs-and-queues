@@ -25,5 +25,10 @@ Route::get('email/send-with-attachment', 'HomeController@sendEmailWithAttachment
 Route::get('email/send-with-multiple-attachments', 'HomeController@sendEmailWithMultipleAttachments');
 Route::get('email/email-of-subscription-renewal', 'HomeController@emailOfSubscriptionRenewal');
 
-// Routes
+// Form Validation
+Route::get('contact-us', 'HomeController@contactUs');
+Route::post('contact-us/send', 'HomeController@sendContactUsMessage');
+
+Route::get('company/profile', 'HomeController@companyProfile');
+Route::post('company/profile/save', 'HomeController@saveCompanyProfile');
 

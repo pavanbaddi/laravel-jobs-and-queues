@@ -86,4 +86,20 @@ class HomeController extends Controller
     public function createForm(){
         return view('product.create_form');
     }
+
+    public function contactUs(Request $request){
+        return view('form-validation.contact-us', []);
+    }
+
+    public function sendContactUsMessage(Request $request){
+        $validated_data = $request->validate([
+            'first_name' => 'required|max:255',
+            'last_name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required|numeric',
+            'subject' => 'required',
+        ]);
+
+        dd($validated_data);
+    }
 }
