@@ -29,6 +29,10 @@ Route::get('email/email-of-subscription-renewal', 'HomeController@emailOfSubscri
 Route::get('contact-us', 'HomeController@contactUs');
 Route::post('contact-us/send', 'HomeController@sendContactUsMessage');
 
-Route::get('company/profile', 'HomeController@companyProfile');
+Route::get('company/profile', 'HomeController@companyProfile'); 
 Route::post('company/profile/save', 'HomeController@saveCompanyProfile');
+
+
+Route::get('user/profile', 'HomeController@userProfileForm');
+Route::post('user/profile/save', 'HomeController@saveUserProfileForm');
 

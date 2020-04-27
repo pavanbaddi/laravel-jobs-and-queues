@@ -102,4 +102,42 @@ class HomeController extends Controller
 
         dd($validated_data);
     }
+
+    public function companyProfile(Request $request){
+        return view('form-validation.company-profile-form', []);
+    }
+
+    public function saveCompanyProfile(Request $request){
+        $validated_data = $request->validate([
+            'company_name' => 'required|max:255',
+            'company_location' => 'nullable',
+            'company_email' => 'required|email',
+            'company_point_of_contact.0.name' => 'required',
+            'company_point_of_contact.0.phone' => 'required|numeric',
+            'company_point_of_contact.0.email' => 'required|email',
+        ]);
+
+        dd($validated_data);
+    }
+
+    public function userProfileForm(Request $request){
+        return view('form-validation.user-profile-form', []);
+    }
+
+    public function saveUserProfileForm(Request $request){
+        $validated_data = $request->validate([
+            // 'image' => 'file ',
+            'image' => 'file|image|mimetypes:image/jpeg|dimensions:min_width=1000,min_height=1200',
+        ]);
+
+            /*
+            The image must be a file.
+            The image must be an image.
+            The image must be a file of type: image/jpeg.
+            The image has invalid image dimensions.
+            */
+
+        dd($validated_data);
+    }
 }
+
