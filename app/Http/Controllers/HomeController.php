@@ -7,6 +7,8 @@ use App\Mail\SubscriptionRenewal;
 use App\Mail\WelcomeEmail;
 use Illuminate\Http\Request;
 use Mail;
+use Illuminate\Support\Facades\Validator;
+
 class HomeController extends Controller
 { 
     public function previewEmail(Request $request){
@@ -125,10 +127,27 @@ class HomeController extends Controller
     }
 
     public function saveUserProfileForm(Request $request){
+
+        $rules=[
+            'image' => 'file|image|dimensions:min_width=100,min_height=100',
+        ];
+        $validator_object = Validator::make($request->all(),$rules);
+
+        $validator_object->after(function ($validator) {
+            $validator->errors()->add('image', 'Something is wrong with image. check once again and reupload.');
+        });
+
+        return redirect('user/profile')
+                        ->withErrors($validator_object)
+                        ->withInput();
+
+        dd($validator_object, $validator_object->errors());
+        exit;
         $validated_data = $request->validate([
             // 'image' => 'file ',
             'image' => 'file|image|mimetypes:image/jpeg|dimensions:min_width=1000,min_height=1200',
         ]);
+        
 
             /*
             The image must be a file.

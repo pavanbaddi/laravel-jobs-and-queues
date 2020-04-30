@@ -22,11 +22,11 @@
     <form action="{{ url('contact-us/send') }}" method="post">
         @csrf
         <label for="first_name">First Name</label><br>
-        <input type="text" name="first_name" value="">
+        <input type="text" name="first_name" value="{{ old('first_name') }}">
         @if($errors->first('first_name'))
             <br>
             <label for="" style="color:red;">{{ $errors->first('first_name') }}</label>
-        @endif
+        @endif  
         <br><br>
 
         <label for="last_name">Last Name</label><br>

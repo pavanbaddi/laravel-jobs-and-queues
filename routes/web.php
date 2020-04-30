@@ -27,7 +27,7 @@ Route::get('email/email-of-subscription-renewal', 'HomeController@emailOfSubscri
 
 // Form Validation
 Route::get('contact-us', 'HomeController@contactUs');
-Route::post('contact-us/send', 'HomeController@sendContactUsMessage');
+Route::post('contact-us/send', 'HomeController@sendContactUsMessage'); 
 
 Route::get('company/profile', 'HomeController@companyProfile'); 
 Route::post('company/profile/save', 'HomeController@saveCompanyProfile');
