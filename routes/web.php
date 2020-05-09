@@ -36,3 +36,7 @@ Route::post('company/profile/save', 'HomeController@saveCompanyProfile');
 Route::get('user/profile', 'HomeController@userProfileForm');
 Route::post('user/profile/save', 'HomeController@saveUserProfileForm');
 
+// Live Wire Counter App
+Route::get('counter', function(){
+    return view('livewire.counter-views.base', []);
+});
