@@ -13,7 +13,7 @@ class Counter extends Component
     public $starting_counter_number=NULL;
 
     public function increament(){
-        (int)$this->initial+=1;
+        $this->initial+=1;
     }
 
     public function decreament(){
