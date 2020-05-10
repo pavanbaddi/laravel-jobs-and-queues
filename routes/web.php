@@ -40,3 +40,9 @@ Route::post('user/profile/save', 'HomeController@saveUserProfileForm');
 Route::get('counter', function(){
     return view('livewire.counter-views.base', []);
 });
+
+
+// Livewire College login and registration routes
+Route::get('college', function(){
+    return view('livewire.college-login-register-test.base', []);
+});
