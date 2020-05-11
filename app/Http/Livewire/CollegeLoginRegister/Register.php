@@ -5,23 +5,39 @@ namespace App\Http\Livewire\CollegeLoginRegister;
 use Livewire\Component;
 use Log;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Requests\RegisterUser;
+use App\User;
+use DB; 
 
 class Register extends Component
 {
+
+    // public $user = [
+    //     "role" => "student",
+    //     "first_name" => "pavan",
+    //     "last_name" => "",
+    //     "date_of_birth" => "2020-05-11",
+    //     "course" => "",
+    //     "sem" => "",
+    //     "mobile_no" => "",
+    //     "parent_mobile_no" => "",
+    //     "email" => "",
+    //     "password" => "",
+    //     "confirm_password" => "",
+    // ];
+
 
     public $user = [
         "role" => "student",
         "first_name" => "pavan",
         "last_name" => "",
         "date_of_birth" => "2020-05-11",
-        "course" => "",
-        "sem" => "",
-        "mobile_no" => "",
-        "parent_mobile_no" => "",
-        "email" => "",
-        "password" => "",
-        "confirm_password" => "",
+        "course" => "bca",
+        "sem" => "3",
+        "mobile_no" => "8892279412",
+        "parent_mobile_no" => "9008890286",
+        "email" => "pavanbaddi911@gmail.com",
+        "password" => "123",
+        "confirm_password" => "123",
     ];
 
     public $validation_errors = [];
@@ -58,29 +74,73 @@ class Register extends Component
         ];
 
         if($this->user["role"]=="student"){
-            // array_merge($rules, [
-            //     "course" => "required",
-            //     "sem" => "required",
-            //     "parent_mobile_no" => "required|integer",
-            // ]);
+            $rules = array_merge($rules, [ 
+                "course" => "required",
+                "sem" => "required",
+                "parent_mobile_no" => "required|integer",
+            ]);
 
-            // array_merge($messages, [
-            //     "course.required" => "Course must be selected",
-            //     "sem.required" => "Semester is required",
-            //     "parent_mobile_no.required" => "Parent Mobile number is required",
-            //     "parent_mobile_no.integer" => "Parent Mobile number must be a number",
-            // ]);
+            $messages = array_merge($messages, [
+                "course.required" => "Course must be selected",
+                "sem.required" => "Semester is required",
+                "parent_mobile_no.required" => "Parent Mobile number is required",
+                "parent_mobile_no.integer" => "Parent Mobile number must be a number",
+            ]);
         }elseif($this->user["role"]=="teacher"){
 
         }else{
 
         }
+
         $validator_object = Validator::make($this->user,$rules, $messages);
 
         if($validator_object->fails()){
-            $this->validation_errors = $validator_object->errors()->toArray();
+            return $this->validation_errors = $validator_object->errors()->toArray();
+        }else{
+            //Create 
+            $info = [
+                "success" => FALSE,
+                "user" => NULL,
+            ];
+            DB::beginTransaction(); 
+            try {
+                $query = [
+                    "first_name" => $this->user["first_name"],
+                    "last_name" => $this->user["last_name"],
+                    "name" => $this->user["first_name"]." ".$this->user["last_name"],
+                    "email" => $this->user["email"],
+                    "password" => bcrypt($this->user["password"]),
+                ];
+
+                // dd($query);
+                $info["user"] = User::create($query);
+
+                $query = [
+                    "role" => $this->user["role"],
+                    "date_of_birth" => $this->user["date_of_birth"],
+                    "mobile_no" => $this->user["mobile_no"],
+                    "course" => $this->user["course"],
+                    "sem" => $this->user["sem"],
+                    "parent_mobile_no" => $this->user["parent_mobile_no"],
+                ];
+                $info["user"]->profile()->create($query);
+
+                // DB::commit();
+                $info['success'] = TRUE;
+            } catch (\Exception $e) {
+                dd($e);
+                Log::info($e);
+                DB::rollback();
+                $info['success'] = FALSE;
+            }
         }
         
+        if($info["success"]){
+            session()->flash('success', 'User registered successfully.');
+        }else{
+            session()->flash('error', 'Something went wrong while registration. Please try again later.');
+        }
+
     }
 
     public function render()

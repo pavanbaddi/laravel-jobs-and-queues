@@ -7,6 +7,12 @@
     @livewireStyles
 
     <link rel="stylesheet" href="{{ url('assets/css/bootstrap.min.css') }}">
+
+    <style>
+        .error{
+            color: red;
+        }
+    </style>
 </head>
 <body>
 
