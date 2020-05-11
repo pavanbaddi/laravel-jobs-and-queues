@@ -7,8 +7,9 @@ use Log;
 use Illuminate\Support\Facades\Validator;
 use App\User;
 use DB; 
+use Illuminate\Support\Facades\Hash;
 
-class Register extends Component
+class AuthComponent extends Component
 {
 
     // public $user = [
@@ -42,8 +43,30 @@ class Register extends Component
 
     public $validation_errors = [];
 
+    public $login = [
+        "email" => "pavanbaddi911@gmail.com",
+        "password" => "123456",
+    ];
+
+
+    public $wants_to_register = 0;
+    public $wants_to_login = 1;
+
     public function mount(){
         
+    }
+
+    public function show($mode){
+        if($mode=="register"){
+            $this->wants_to_register = 1;
+            $this->wants_to_login = 0;
+        }elseif($mode=="login"){
+            $this->wants_to_register = 0;
+            $this->wants_to_login = 1;
+        }else{
+            $this->wants_to_register = 0;
+            $this->wants_to_login = 0;
+        }
     }
 
     public function save(){
@@ -86,10 +109,6 @@ class Register extends Component
                 "parent_mobile_no.required" => "Parent Mobile number is required",
                 "parent_mobile_no.integer" => "Parent Mobile number must be a number",
             ]);
-        }elseif($this->user["role"]=="teacher"){
-
-        }else{
-
         }
 
         $validator_object = Validator::make($this->user,$rules, $messages);
@@ -125,7 +144,7 @@ class Register extends Component
                 ];
                 $info["user"]->profile()->create($query);
 
-                // DB::commit();
+                DB::commit();
                 $info['success'] = TRUE;
             } catch (\Exception $e) {
                 dd($e);
@@ -141,6 +160,38 @@ class Register extends Component
             session()->flash('error', 'Something went wrong while registration. Please try again later.');
         }
 
+    }
+
+    public function verify(){
+        $rules=[
+            'email' => 'required|email',
+            'password' => 'required',
+        ];
+
+        $messages = [
+            "email.required" => "Email is required",
+            "email.email" => "Invalid email id given.",
+            "password.required" => "Password must be filled",
+        ];
+
+        $validator_object = Validator::make($this->login,$rules, $messages);
+
+        if($validator_object->fails()){
+            return $this->validation_errors = $validator_object->errors()->toArray();
+        }else{
+            //Create 
+            $user = User::where([
+                "email" => $this->login["email"],
+            ])->get();
+
+            // dd($user, bcrypt($this->login["password"]));
+
+            if(count($user)==1 && Hash::check($this->login["password"], $user[0]->password)){
+                session()->flash('success', "Yes! Login successful. You'r authenticated user");
+            }else{
+                session()->flash('error', 'You credentials does not match. Please try again later.');
+            }
+        }
     }
 
     public function render()

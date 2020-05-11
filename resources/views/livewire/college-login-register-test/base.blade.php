@@ -16,7 +16,7 @@
 </head>
 <body>
 
-    @livewire('college-login-register.register')
+    @livewire('college-login-register.auth-component')
 
     <!-- 
         {# livewire('CollegeLoginRegister.Registers') #} this does not work
