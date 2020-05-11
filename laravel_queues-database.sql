@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 11, 2020 at 12:03 PM
+-- Generation Time: May 11, 2020 at 10:05 PM
 -- Server version: 5.7.28-0ubuntu0.16.04.2
 -- PHP Version: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -326,6 +326,13 @@ CREATE TABLE `jobs` (
   `created_at` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `jobs`
+--
+
+INSERT INTO `jobs` (`id`, `queue`, `payload`, `attempts`, `reserved_at`, `available_at`, `created_at`) VALUES
+(1, 'default', '{\"displayName\":\"App\\\\Mail\\\\WelcomeEmail\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"delay\":null,\"timeout\":null,\"timeoutAt\":null,\"data\":{\"commandName\":\"Illuminate\\\\Mail\\\\SendQueuedMailable\",\"command\":\"O:34:\\\"Illuminate\\\\Mail\\\\SendQueuedMailable\\\":3:{s:8:\\\"mailable\\\";O:21:\\\"App\\\\Mail\\\\WelcomeEmail\\\":24:{s:13:\\\"\\u0000*\\u0000email_data\\\";a:3:{s:2:\\\"to\\\";s:20:\\\"to-email@example.com\\\";s:12:\\\"company_name\\\";s:17:\\\"The Code Learners\\\";s:4:\\\"user\\\";a:1:{s:4:\\\"name\\\";s:11:\\\"Pavan Kumar\\\";}}s:6:\\\"locale\\\";N;s:4:\\\"from\\\";a:0:{}s:2:\\\"to\\\";a:1:{i:0;a:2:{s:4:\\\"name\\\";N;s:7:\\\"address\\\";s:20:\\\"to-email@example.com\\\";}}s:2:\\\"cc\\\";a:0:{}s:3:\\\"bcc\\\";a:0:{}s:7:\\\"replyTo\\\";a:0:{}s:7:\\\"subject\\\";N;s:11:\\\"\\u0000*\\u0000markdown\\\";N;s:7:\\\"\\u0000*\\u0000html\\\";N;s:4:\\\"view\\\";N;s:8:\\\"textView\\\";N;s:8:\\\"viewData\\\";a:0:{}s:11:\\\"attachments\\\";a:0:{}s:14:\\\"rawAttachments\\\";a:0:{}s:15:\\\"diskAttachments\\\";a:0:{}s:9:\\\"callbacks\\\";a:0:{}s:10:\\\"connection\\\";N;s:5:\\\"queue\\\";N;s:15:\\\"chainConnection\\\";N;s:10:\\\"chainQueue\\\";N;s:5:\\\"delay\\\";N;s:10:\\\"middleware\\\";a:0:{}s:7:\\\"chained\\\";a:0:{}}s:5:\\\"tries\\\";N;s:7:\\\"timeout\\\";N;}\"}}', 0, NULL, 1586694812, 1586694812);
+
 -- --------------------------------------------------------
 
 --
@@ -346,7 +353,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2014_10_12_000000_create_users_table', 1),
 (2, '2014_10_12_100000_create_password_resets_table', 1),
 (3, '2019_08_19_000000_create_failed_jobs_table', 1),
-(4, '2020_04_09_100715_create_jobs_table', 1);
+(4, '2020_04_09_100715_create_jobs_table', 1),
+(5, '2020_05_11_150628_user_profile_table', 2);
 
 -- --------------------------------------------------------
 
@@ -4509,6 +4517,8 @@ INSERT INTO `states_census` (`state_id`, `state_name`, `country_id`, `state_popu
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
@@ -4517,6 +4527,40 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(8, 'pavan', '', 'pavan ', 'pavanbaddi911@gmail.com', NULL, '$2y$10$yatr.xS71ursFaWek9xnSORxSbT49uY4Un2lpY1lIxQJPOT7wMFaG', NULL, '2020-05-11 10:57:38', '2020-05-11 10:57:38');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_profile`
+--
+
+CREATE TABLE `users_profile` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `role` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date_of_birth` date NOT NULL,
+  `mobile_no` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `course` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sem` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `parent_mobile_no` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users_profile`
+--
+
+INSERT INTO `users_profile` (`id`, `user_id`, `role`, `date_of_birth`, `mobile_no`, `course`, `sem`, `parent_mobile_no`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(6, 8, 'student', '2000-03-23', '8892279412', 'bca', '3', '9008890286', '2020-05-11 10:57:38', '2020-05-11 10:57:38', NULL);
 
 --
 -- Indexes for dumped tables
@@ -4567,6 +4611,12 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
+-- Indexes for table `users_profile`
+--
+ALTER TABLE `users_profile`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -4586,13 +4636,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `states_census`
@@ -4604,7 +4654,13 @@ ALTER TABLE `states_census`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `users_profile`
+--
+ALTER TABLE `users_profile`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
