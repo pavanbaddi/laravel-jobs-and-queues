@@ -3,7 +3,7 @@ Student, Teacher,
 Student
 [
     first_name, last_name, date_of_birth, course, sem, mobile_no, parent_mobile_no, email, password, confirm_password
-]
+] 
 
 Teacher
 [

@@ -6,9 +6,7 @@
     <title>Laravel LiveWire Login & Register Application</title>
     @livewireStyles
 
-    @section('stylesheets')
-
-    @endsection
+    <link rel="stylesheet" href="{{ url('assets/css/bootstrap.min.css') }}">
 </head>
 <body>
 
@@ -20,8 +18,8 @@
     
     @livewireScripts
 
-    @section('scripts')
-
-    @endsection
+    <script src="{{ url('assets/js/jquery.min.js') }}"></script>
+    <script src="{{ url('assets/js/popper.min.js') }}"></script>
+    <script src="{{ url('assets/js/bootstrap.min.js') }}"></script>
 </body>
 </html>
