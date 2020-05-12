@@ -12,45 +12,30 @@ use Illuminate\Support\Facades\Hash;
 class AuthComponent extends Component
 {
 
-    // public $user = [
-    //     "role" => "student",
-    //     "first_name" => "",
-    //     "last_name" => "",
-    //     "date_of_birth" => "",
-    //     "course" => "",
-    //     "sem" => "",
-    //     "mobile_no" => "",
-    //     "parent_mobile_no" => "",
-    //     "email" => "",
-    //     "password" => "",
-    //     "confirm_password" => "",
-    // ];
-
-
     public $user = [
         "role" => "student",
-        "first_name" => "pavan",
+        "first_name" => "",
         "last_name" => "",
-        "date_of_birth" => "2020-05-11",
-        "course" => "bca",
-        "sem" => "3",
-        "mobile_no" => "8892279412",
-        "parent_mobile_no" => "9008890286",
-        "email" => "pavanbaddi911@gmail.com",
-        "password" => "123",
-        "confirm_password" => "123",
+        "date_of_birth" => "",
+        "course" => "",
+        "sem" => "",
+        "mobile_no" => "",
+        "parent_mobile_no" => "",
+        "email" => "",
+        "password" => "",
+        "confirm_password" => "",
     ];
 
     public $validation_errors = [];
 
     public $login = [
-        "email" => "pavanbaddi911@gmail.com",
-        "password" => "123456",
+        "email" => "",
+        "password" => "",
     ];
 
 
     public $wants_to_register = 0;
-    public $wants_to_login = 1;
+    public $wants_to_login = 0;
 
     public function mount(){
         
@@ -59,7 +44,7 @@ class AuthComponent extends Component
     public function show($mode){
         if($mode=="register"){
             $this->wants_to_register = 1;
-            $this->wants_to_login = 0;
+            $this->wants_to_login = 0; 
         }elseif($mode=="login"){
             $this->wants_to_register = 0;
             $this->wants_to_login = 1;
@@ -147,7 +132,6 @@ class AuthComponent extends Component
                     "password" => bcrypt($this->user["password"]),
                 ];
 
-                // dd($query);
                 $info["user"] = User::create($query);
 
                 $query = [
@@ -198,8 +182,6 @@ class AuthComponent extends Component
             $user = User::where([
                 "email" => $this->login["email"],
             ])->get();
-
-            // dd($user, bcrypt($this->login["password"]));
 
             if(count($user)==1 && Hash::check($this->login["password"], $user[0]->password)){
                 session()->flash('success', "Yes! Login successful. You'r authenticated user");

@@ -26,6 +26,7 @@
     <div class="row wrapper">
         @if($wants_to_register == 0 && $wants_to_login == 0)
             <div class="col-md-12 text-center"  >   
+                <h2 class="text-center" >Laravel Livewire | Login & Registration Form</h2>
                 <button type="button" class="btn btn-primary" wire:click="show('login')" >Login</button> 
                 <button type="button" class="btn btn-success" wire:click="show('register')" >Register</button>
             </div>
