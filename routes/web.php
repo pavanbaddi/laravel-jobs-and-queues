@@ -44,5 +44,5 @@ Route::get('counter', function(){
 
 // Livewire College login and registration routes
 Route::get('college', function(){
-    return view('livewire.college-login-register-test.base', []);
+    return view('livewire.college-login-register.base', []);
 });

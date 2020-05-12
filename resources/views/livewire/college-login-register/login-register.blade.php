@@ -239,7 +239,7 @@
                     </div>
 
 
-                    <div class="col-md-12">
+                    <div class="col-md-12"> 
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary"  value="Register" > 
                         </div>

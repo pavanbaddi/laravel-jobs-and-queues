@@ -14,9 +14,9 @@ class AuthComponent extends Component
 
     // public $user = [
     //     "role" => "student",
-    //     "first_name" => "pavan",
+    //     "first_name" => "",
     //     "last_name" => "",
-    //     "date_of_birth" => "2020-05-11",
+    //     "date_of_birth" => "",
     //     "course" => "",
     //     "sem" => "",
     //     "mobile_no" => "",
@@ -67,6 +67,22 @@ class AuthComponent extends Component
             $this->wants_to_register = 0;
             $this->wants_to_login = 0;
         }
+    }
+
+    public function emptyRegistrationForm(){
+        $this->user = [
+            "role" => "student",
+            "first_name" => "",
+            "last_name" => "",
+            "date_of_birth" => "",
+            "course" => "",
+            "sem" => "",
+            "mobile_no" => "",
+            "parent_mobile_no" => "",
+            "email" => "",
+            "password" => "",
+            "confirm_password" => "",
+        ];
     }
 
     public function save(){
@@ -147,14 +163,13 @@ class AuthComponent extends Component
                 DB::commit();
                 $info['success'] = TRUE;
             } catch (\Exception $e) {
-                dd($e);
-                Log::info($e);
                 DB::rollback();
                 $info['success'] = FALSE;
             }
         }
         
-        if($info["success"]){
+        if(!$info["success"]){
+            $this->emptyRegistrationForm();
             session()->flash('success', 'User registered successfully.');
         }else{
             session()->flash('error', 'Something went wrong while registration. Please try again later.');
@@ -194,8 +209,10 @@ class AuthComponent extends Component
         }
     }
 
+    
+
     public function render()
     {
-        return view('livewire.college-login-register-test.register', []);
+        return view('livewire.college-login-register.login-register', []);
     }
 }
