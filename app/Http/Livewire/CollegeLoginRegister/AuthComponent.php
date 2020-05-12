@@ -152,7 +152,7 @@ class AuthComponent extends Component
             }
         }
         
-        if(!$info["success"]){
+        if($info["success"]){
             $this->emptyRegistrationForm();
             session()->flash('success', 'User registered successfully.');
         }else{

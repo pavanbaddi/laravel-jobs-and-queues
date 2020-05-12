@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 11, 2020 at 10:05 PM
+-- Generation Time: May 12, 2020 at 03:02 PM
 -- Server version: 5.7.28-0ubuntu0.16.04.2
 -- PHP Version: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -4533,7 +4533,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(8, 'pavan', '', 'pavan ', 'pavanbaddi911@gmail.com', NULL, '$2y$10$yatr.xS71ursFaWek9xnSORxSbT49uY4Un2lpY1lIxQJPOT7wMFaG', NULL, '2020-05-11 10:57:38', '2020-05-11 10:57:38');
+(1, 'john', 'connor', 'john connor', 'john123@gmail.com', NULL, '$2y$10$p31XjY2831dExptqvg40I.YUWTgar/KCCLZU5Uk/lOBUyVnwPy0hW', NULL, '2020-05-12 04:01:03', '2020-05-12 04:01:03');
 
 -- --------------------------------------------------------
 
@@ -4560,7 +4560,7 @@ CREATE TABLE `users_profile` (
 --
 
 INSERT INTO `users_profile` (`id`, `user_id`, `role`, `date_of_birth`, `mobile_no`, `course`, `sem`, `parent_mobile_no`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(6, 8, 'student', '2000-03-23', '8892279412', 'bca', '3', '9008890286', '2020-05-11 10:57:38', '2020-05-11 10:57:38', NULL);
+(1, 1, 'student', '1996-12-25', '948561569', 'be', '2', '8892245185', '2020-05-12 04:01:03', '2020-05-12 04:01:03', NULL);
 
 --
 -- Indexes for dumped tables
@@ -4654,13 +4654,13 @@ ALTER TABLE `states_census`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users_profile`
 --
 ALTER TABLE `users_profile`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
