@@ -2,7 +2,7 @@
 
     <h2>Laravel Livewire Counter Web Application</h2>
 
-    @if ( session()->has('info') )
+    @if ( session()->has('info') ) 
         <p><strong>Info : </strong> {{ session('info') }}</p>
     @endif
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laravel LiveWire Multiple File Uploads</title>
+    <title>Laravel LiveWire Multiple File Validation and Uploads</title>
     @livewireStyles
     @livewireScripts
 
