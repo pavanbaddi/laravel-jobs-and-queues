@@ -46,3 +46,9 @@ Route::get('counter', function(){
 Route::get('college', function(){
     return view('livewire.college-login-register.base', []);
 });
+
+
+// Livewire File Uploads
+Route::get('files', function(){
+    return view('livewire.files.base', []);
+});
