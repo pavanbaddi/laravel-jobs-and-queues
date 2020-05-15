@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 12, 2020 at 03:02 PM
+-- Generation Time: May 16, 2020 at 12:31 AM
 -- Server version: 5.7.28-0ubuntu0.16.04.2
 -- PHP Version: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -354,7 +354,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (2, '2014_10_12_100000_create_password_resets_table', 1),
 (3, '2019_08_19_000000_create_failed_jobs_table', 1),
 (4, '2020_04_09_100715_create_jobs_table', 1),
-(5, '2020_05_11_150628_user_profile_table', 2);
+(5, '2020_05_11_150628_user_profile_table', 2),
+(6, '2020_05_15_174628_create_todo_table', 3);
 
 -- --------------------------------------------------------
 
@@ -4512,6 +4513,30 @@ INSERT INTO `states_census` (`state_id`, `state_name`, `country_id`, `state_popu
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `todos`
+--
+
+CREATE TABLE `todos` (
+  `todo_id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `desc` longtext COLLATE utf8mb4_unicode_ci,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `todos`
+--
+
+INSERT INTO `todos` (`todo_id`, `title`, `desc`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(17, 'Todo Title', 'Todo Description', 'pending', '2020-05-15 12:50:00', '2020-05-15 12:50:00', NULL),
+(18, 'Todo Title 2', 'Todo Description 2 ', 'accomplished', '2020-05-15 12:53:42', '2020-05-15 13:26:55', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -4604,6 +4629,12 @@ ALTER TABLE `states_census`
   ADD PRIMARY KEY (`state_id`);
 
 --
+-- Indexes for table `todos`
+--
+ALTER TABLE `todos`
+  ADD PRIMARY KEY (`todo_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -4642,13 +4673,19 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `states_census`
 --
 ALTER TABLE `states_census`
   MODIFY `state_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4121;
+
+--
+-- AUTO_INCREMENT for table `todos`
+--
+ALTER TABLE `todos`
+  MODIFY `todo_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `users`

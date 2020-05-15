@@ -13,11 +13,41 @@
         .error{
             color: red;
         }
+
+        .container{
+            max-width: 70%;
+        }
     </style>
 </head>
 <body>
 
-    @livewire('todo.todo-component')
+    
+
+
+    <div class="container" >
+        <div class="wrapper">
+            <div class="title-container">
+                <h1 class="title text-center">Laravel Livewire | Todo Application with Sorting, Filtering and Paginating</h1>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+
+                    @livewire('todo.todo-notification-component')
+                
+                    @livewire('todo.form-component')
+
+                </div>
+
+                <div class="col-md-8">
+
+                    @livewire('todo.list-component')
+            
+                </div>
+            </div>
+        </div>
+
+    </div>
     
     <script src="{{ url('assets/js/jquery.min.js') }}"></script>
     <script src="{{ url('assets/js/popper.min.js') }}"></script>
