@@ -52,3 +52,9 @@ Route::get('college', function(){
 Route::get('files', function(){
     return view('livewire.files.base', []);
 });
+
+
+// Livewire Todo Application Routes
+Route::get('todo', function(){
+    return view('livewire.todo.base', []); 
+});
