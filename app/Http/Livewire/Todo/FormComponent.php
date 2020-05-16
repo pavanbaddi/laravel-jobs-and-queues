@@ -55,7 +55,7 @@ class FormComponent extends Component
     }
 
     public function save(){
-        $form = new TodoFormRequest();
+        $form = new TodoFormRequest(); 
         $form->merge($this->form);
         $validated_data = $form->validate($form->rules());
         

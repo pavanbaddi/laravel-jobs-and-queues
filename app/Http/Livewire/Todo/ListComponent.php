@@ -9,7 +9,7 @@ use App\TodoModel;
 class ListComponent extends Component
 {
 
-    public $objects = [];
+    public $objects = []; 
 
     public $paginator = [];
 
@@ -93,8 +93,6 @@ class ListComponent extends Component
 
         $this->loadList();
     }
-
-
 
     public function render()
     {
