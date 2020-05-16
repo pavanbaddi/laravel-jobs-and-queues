@@ -4,6 +4,20 @@
         .table p{
             margin: 0;
         }
+
+        .filter-container{
+            margin-bottom: 15px;
+            padding: 15px 10px;
+            background: #ffc107;
+        }
+
+        .filter-container > .row{
+            margin: 0;
+        }
+
+        .filter-container > .row > div{
+            padding: 0 5px;
+        }
     </style>
 
     <div wire:loading wire:init="loadList" >
@@ -12,7 +26,46 @@
 
 
     <div class="filter-container">
-        <button type="button" wire:click="updateQuery" >Checkout</button>
+        <h2>Filter</h2>
+        <div class="row">
+            <div class="col-md-3">
+                <label for="">Search Title</label>
+                <input type="text" class="form-control" wire:model="filter.search"  >
+            </div>
+
+            <div class="col-md-2">
+                <label for="">Status</label>
+                <select wire:model="filter.status" class="form-control" >
+                    <option value="">Choose One</option>
+                    <option value="pending">Task Pending</option>
+                    <option value="accomplished">Task Accomplished</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label for="">Order Field</label>
+                <select wire:model="filter.order_field" class="form-control" >
+                    <option value="">Choose One</option>
+                    <option value="title">Task Title</option>
+                    <option value="status">Task Status</option>
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <label for="">Order Type</label>
+                <select wire:model="filter.order_type" class="form-control" >
+                    <option value="">Choose One</option>
+                    <option value="ASC">Ascending</option>
+                    <option value="DESC">Descending</option>
+                </select>
+            </div>
+
+            <div class="col-md-2" style="display: flex;align-items: flex-end;" >
+                <div>
+                    <button type="button" wire:click="loadList" class="btn btn-primary" >Filter</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="table-responsive">
@@ -62,61 +115,54 @@
 
     <div class="pagination-container">
         <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" href="javascript:void(0)" 
-                    @if($paginator["current_page"] > 1) 
-                        wire:click="applyPagination('previous_page', {{ $paginator["current_page"]-1 }})"
-                    @endif             
-                >
+            <li class="page-item 
+                    @if($page == 1)
+                        disabled
+                    @endif
+                ">
+                <a class="page-link" href="javascript:void(0)" wire:click="applyPagination('previous_page', {{ $page-1 }})" >
                     Previous
                 </a>
             </li>
 
-            <?php // $paginator["last_page"]=3; ?>
-
-            <?php
-
-                $current_page = $paginator["current_page"];
-                $last_page = $paginator["last_page"];
-
-            ?>
-
-            @for($i=1; $i <= $paginator["last_page"]; $i++ )
-                <?php 
-                    $show=TRUE; 
-                ?>
-
-                @if($i>5)
-                    <?php $show=FALSE; ?>
-                @endif 
-
-                @if($paginator["last_page"]<=5)
-                    <?php $show=TRUE; ?>
-                @endif
-
-                @if($show)
-                    <li class="page-item">
-                        <a class="page-link" href="javascript:void(0)"
-                            wire:click="applyPagination('page', {{ $i }})"
-                        >{{ $i }}</a>
-                    </li>
-                @endif
-
-                @if($i == $paginator["last_page"] && $paginator["last_page"]>5)
-                    <li class="page-item">
-                        <a class="page-link" href="javascript:void(0)">...</a>
-                    </li>
-                @endif
-            @endfor
-
-            <li class="page-item">
+            <li class="page-item
+                    @if($page == $paginator['last_page']) 
+                        disabled
+                    @endif
+            
+                ">
                 <a class="page-link" href="javascript:void(0)" 
-                    @if(($paginator["current_page"]+1) <= $paginator["last_page"]) 
-                        wire:click="applyPagination('next_page', {{ $paginator["current_page"]+1 }})"
+                    @if($page <= $paginator['last_page']) 
+                        wire:click="applyPagination('next_page', {{ $page+1 }})"
                     @endif    
                 >
                 Next
                 </a>
+            </li>
+
+            <li class="page-item"  style="margin: 0 5px" >
+                Jump to Page
+            </li>
+
+            <li class="page-item"  style="margin: 0 5px" >
+                <select class="form-control" title="" style="width: 80px" wire:model="page" >
+                    @for($i=1;$i<=$paginator['last_page'];$i++)
+                        <option value="{{ $i }}">{{ $i }}</option>
+                    @endfor
+                </select>
+            </li>
+
+            <li class="page-item"  style="margin: 0 5px" >
+                Items Per Page
+            </li>
+
+            <li class="page-item"  style="margin: 0 5px" >
+                <select class="form-control" title="" style="width: 80px" wire:model="items_per_page" wire:change="loadList" >
+                    <option value="5">05</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                </select>
             </li>
         </ul>
     </div>

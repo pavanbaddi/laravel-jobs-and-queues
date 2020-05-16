@@ -28,7 +28,7 @@ class FormComponent extends Component
     ];
 
     public function mount(){
-        $faker = Faker::create();
+        // $faker = Faker::create();
 
         // for($i=0; $i <= 100; $i++){
         //     TodoModel::create([
@@ -50,7 +50,7 @@ class FormComponent extends Component
             $todo = TodoModel::find($todo_id);           
             $this->form = $todo->toArray();
         } catch (Exception $ex) {
-            dd($ex);
+            
         }
     }
 

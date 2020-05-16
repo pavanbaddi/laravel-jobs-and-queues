@@ -12,7 +12,6 @@ class TodoNotificationComponent extends Component
     ];
 
     public function flashMessage($type, $msg){
-        // dd($type, $msg);
         session()->flash($type, $msg);
     }
 

@@ -5,12 +5,9 @@ namespace App\Http\Livewire\Todo;
 use Livewire\Component;
 use Log;
 use App\TodoModel;
-use Livewire\WithPagination;
 
 class ListComponent extends Component
 {
-
-    // use WithPagination;
 
     public $objects = [];
 
@@ -18,10 +15,19 @@ class ListComponent extends Component
 
     public $page = 1;
 
+    public $items_per_page = 5;
+
     public $loading_message = "";
 
     public $listeners = [
         "load_list" => "loadList"
+    ];
+
+    public $filter = [
+        "search" => "",
+        "status" => "",
+        "order_field" => "",
+        "order_type" => "",
     ];
 
     protected $updatesQueryString = ['page'];
@@ -37,18 +43,43 @@ class ListComponent extends Component
 
     public function loadList(){
         $this->loading_message = "Loading Todos...";
-        $objects = TodoModel::where([])->orderBy('status', 'ASC')->paginate(5);
+
+        $query = [];
+
+        if(!empty($this->filter["status"])){
+            $query["status"] = $this->filter["status"];
+        }
+
+        $objects = TodoModel::where($query);
+
+        // Search
+        if(!empty($this->filter["search"])){
+            $filter = $this->filter;
+            $objects = $objects->where(function ($query) use ($filter) {
+                $query->where('title', 'LIKE', $this->filter['search'] . '%');
+            });
+        }
+        
+        // Ordering
+        if(!empty($this->filter["order_field"])){
+            $order_type = (!empty($this->filter["order_type"]))? $this->filter["order_type"]: 'ASC';
+            $objects = $objects->orderBy($this->filter["order_field"], $order_type);
+        }
+
+        // Paginating
+        $objects = $objects->paginate($this->items_per_page);
+
+
         $this->paginator = $objects->toArray();
         $this->objects = $objects->items();
-
-        // dd($this->paginator);
+        
     }
+
 
     // Pagination Methods
     public function applyPagination($action, $value, $options=[]){
-        // dd($action, $value);
-
-        if( $action == "previous_page" ){
+        
+        if( $action == "previous_page" && $this->page > 1){
             $this->page-=1;
         }
 
