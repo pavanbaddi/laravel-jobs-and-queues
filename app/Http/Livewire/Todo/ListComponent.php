@@ -36,11 +36,6 @@ class ListComponent extends Component
         $this->loadList();
     }
 
-    public function updateQuery(){
-        $this->page+=1;
-        $this->loadList();
-    }
-
     public function loadList(){
         $this->loading_message = "Loading Todos...";
 
@@ -75,8 +70,7 @@ class ListComponent extends Component
         
     }
 
-
-    // Pagination Methods
+    // Pagination Method
     public function applyPagination($action, $value, $options=[]){
         
         if( $action == "previous_page" && $this->page > 1){

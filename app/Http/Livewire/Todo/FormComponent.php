@@ -81,7 +81,7 @@ class FormComponent extends Component
         }
 
 
-        if($info["success"]){
+        if(!$info["success"]){ 
             $type = "success";
             if($info["todo"]->wasRecentlyCreated){
                 $message = "New Task created successfully.";
