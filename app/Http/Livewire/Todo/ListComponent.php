@@ -10,11 +10,13 @@ use Livewire\WithPagination;
 class ListComponent extends Component
 {
 
-    use WithPagination;
+    // use WithPagination;
 
     public $objects = [];
 
     public $paginator = [];
+
+    public $page = 1;
 
     public $loading_message = "";
 
@@ -22,7 +24,14 @@ class ListComponent extends Component
         "load_list" => "loadList"
     ];
 
+    protected $updatesQueryString = ['page'];
+ 
     public function mount(){
+        $this->loadList();
+    }
+
+    public function updateQuery(){
+        $this->page+=1;
         $this->loadList();
     }
 
@@ -32,8 +41,28 @@ class ListComponent extends Component
         $this->paginator = $objects->toArray();
         $this->objects = $objects->items();
 
-        dd($this->paginator);
+        // dd($this->paginator);
     }
+
+    // Pagination Methods
+    public function applyPagination($action, $value, $options=[]){
+        // dd($action, $value);
+
+        if( $action == "previous_page" ){
+            $this->page-=1;
+        }
+
+        if( $action == "next_page" ){
+            $this->page+=1;
+        }
+
+        if( $action == "page" ){
+            $this->page=$value;
+        }
+
+        $this->loadList();
+    }
+
 
 
     public function render()

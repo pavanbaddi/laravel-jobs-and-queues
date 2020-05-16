@@ -12,7 +12,7 @@
 
 
     <div class="filter-container">
-        <!-- <button type="button" wire:click="loadList" >Checkout</button> -->
+        <button type="button" wire:click="updateQuery" >Checkout</button>
     </div>
 
     <div class="table-responsive">
@@ -56,17 +56,68 @@
                     </tr>
                 @endif
             </tbody>
-    </table>
+        </table>
     </div>
 
 
     <div class="pagination-container">
         <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item active"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0)" 
+                    @if($paginator["current_page"] > 1) 
+                        wire:click="applyPagination('previous_page', {{ $paginator["current_page"]-1 }})"
+                    @endif             
+                >
+                    Previous
+                </a>
+            </li>
+
+            <?php // $paginator["last_page"]=3; ?>
+
+            <?php
+
+                $current_page = $paginator["current_page"];
+                $last_page = $paginator["last_page"];
+
+            ?>
+
+            @for($i=1; $i <= $paginator["last_page"]; $i++ )
+                <?php 
+                    $show=TRUE; 
+                ?>
+
+                @if($i>5)
+                    <?php $show=FALSE; ?>
+                @endif 
+
+                @if($paginator["last_page"]<=5)
+                    <?php $show=TRUE; ?>
+                @endif
+
+                @if($show)
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0)"
+                            wire:click="applyPagination('page', {{ $i }})"
+                        >{{ $i }}</a>
+                    </li>
+                @endif
+
+                @if($i == $paginator["last_page"] && $paginator["last_page"]>5)
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0)">...</a>
+                    </li>
+                @endif
+            @endfor
+
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0)" 
+                    @if(($paginator["current_page"]+1) <= $paginator["last_page"]) 
+                        wire:click="applyPagination('next_page', {{ $paginator["current_page"]+1 }})"
+                    @endif    
+                >
+                Next
+                </a>
+            </li>
         </ul>
     </div>
 </div>

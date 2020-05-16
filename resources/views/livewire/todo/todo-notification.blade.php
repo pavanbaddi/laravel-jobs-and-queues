@@ -11,6 +11,6 @@
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             {{ session('error') }}
         </div>
-    @endif
-</div>
+    @endif 
+</div> 
  
