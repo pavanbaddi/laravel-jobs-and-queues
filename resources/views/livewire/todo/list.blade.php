@@ -19,12 +19,13 @@
         <table class="table table-hover table-bordered">
             <thead>
                 <tr>
-                    <th>Title</th>
+                    <th style="width:50%;" >Title</th>
                     <th>Status</th>
                     <th>Action</th>
-                </tr>
+                </tr> 
             </thead>
             <tbody>
+                
                 @if(!empty($objects))
                     @foreach($objects as $k => $v)
                         <tr>
@@ -60,6 +61,12 @@
 
 
     <div class="pagination-container">
-
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item active"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
     </div>
 </div>

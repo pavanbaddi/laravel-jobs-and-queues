@@ -9,6 +9,9 @@ use DB;
 use App\TodoModel;
 use Exception;
 
+use Faker\Factory as Faker;
+
+
 class FormComponent extends Component
 {
 
@@ -25,6 +28,17 @@ class FormComponent extends Component
     ];
 
     public function mount(){
+        $faker = Faker::create();
+
+        // for($i=0; $i <= 100; $i++){
+        //     TodoModel::create([
+        //         "title" => $faker->realText(mt_rand(10, 20)),
+        //         "desc" => $faker->realText(mt_rand(50, 70)),
+        //         "statuc" => $faker->randomElement(['pending','accomplished']),
+        //     ]);
+        // }
+
+
         foreach($this->form as $k => &$v){
             $v = NULL;
         }

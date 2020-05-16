@@ -5,11 +5,16 @@ namespace App\Http\Livewire\Todo;
 use Livewire\Component;
 use Log;
 use App\TodoModel;
+use Livewire\WithPagination;
 
 class ListComponent extends Component
 {
 
+    use WithPagination;
+
     public $objects = [];
+
+    public $paginator = [];
 
     public $loading_message = "";
 
@@ -18,12 +23,16 @@ class ListComponent extends Component
     ];
 
     public function mount(){
-        $this->objects = $this->loadList();
+        $this->loadList();
     }
 
     public function loadList(){
         $this->loading_message = "Loading Todos...";
-        $this->objects = TodoModel::where([])->get();
+        $objects = TodoModel::where([])->orderBy('status', 'ASC')->paginate(5);
+        $this->paginator = $objects->toArray();
+        $this->objects = $objects->items();
+
+        dd($this->paginator);
     }
 
 
