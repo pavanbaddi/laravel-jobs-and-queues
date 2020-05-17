@@ -53,8 +53,18 @@ Route::get('files', function(){
     return view('livewire.files.base', []);
 });
 
-
+// https://stackoverflow.com/questions/50020636/in-laravel-npm-run-dev-errors
 // Livewire Todo Application Routes
 Route::get('todo', function(){
     return view('livewire.todo.base', []); 
 });
+ 
+
+// Liview E-Commerce app routes
+// Route::get('ecommerce', function(){
+//     return view('livewire.todo.base', []); 
+// });
+
+
+Route::livewire('ecommerce', 'counter');
+Route::livewire('ecommerce/todo', 'todo.form-component');
