@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laravel Livewire | Todo Application with Sorting, Filtering and Paginating</title>
+    <title>Laravel Livewire | E-Commerce Application using Turbolinks</title>
     @livewireStyles
     @livewireScripts
     <script src="{{ url('js/app.js') }}" ></script>
