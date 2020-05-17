@@ -65,6 +65,9 @@ Route::get('todo', function(){
 //     return view('livewire.todo.base', []); 
 // });
 
+Route::group(['prefix' => "ecommerce"], function () {
 
-Route::livewire('ecommerce', 'counter');
-Route::livewire('ecommerce/todo', 'todo.form-component');
+    Route::livewire('', 'ecommerce.home')->name('ecommerce.home');
+    Route::livewire('/products', 'ecommerce.product.list-component')->name('ecommerce.product.list');
+    Route::livewire('/product/create', 'ecommerce.product.form-component')->name('ecommerce.product.form');
+});
