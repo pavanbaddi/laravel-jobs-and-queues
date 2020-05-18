@@ -29,6 +29,8 @@
     <script src="{{ url('assets/js/popper.min.js') }}" data-turbolinks-eval=false ></script>
     <script src="{{ url('assets/js/bootstrap.min.js') }}" data-turbolinks-eval=false ></script>
 
+    
+
     @stack('scripts')
 </body>
 </html>

@@ -11,3 +11,4 @@ class MenuComponent extends Component
         return view('livewire.ecommerce.menu');
     }
 }
+ 

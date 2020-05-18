@@ -13,6 +13,7 @@ use App\ProductModel;
 use DB;
 use Illuminate\Support\Arr;
 use Throwable;
+use Illuminate\Support\Facades\Redirect;
 
 class FormComponent extends Component
 {
@@ -127,7 +128,7 @@ class FormComponent extends Component
 
                 // dd($info);
                 
-                DB::commit();
+                // DB::commit();
                 $info['success'] = TRUE;
             } catch (\Exception $e) {
                 dd($e);
@@ -150,6 +151,12 @@ class FormComponent extends Component
             $this->emitTo('ecommerce.notification-component', 'flash_message', $type, $message);
 
             if($info["success"]){ 
+                // return redirect()->route('ecommerce.home');
+                
+                // return redirect(route('ecommerce.home'));
+                // return Redirect::route('ecommerce.home');
+                // return Redirect::to(route('ecommerce.home'));
+                return $this->redirect(route('ecommerce.home'));
                 // return redirect()->to(route('ecommerce.product.edit', ["product_id" => $info["product"]["product_id"] ]));
             }
         }

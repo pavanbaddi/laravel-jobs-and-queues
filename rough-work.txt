@@ -1,16 +1,25 @@
-Student, Teacher, 
+<div class="container" wire:poll.10000ms="checkForFlashMessages">
+    @if($flash["type"]=="success")
+        <div class="alert alert-success alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ $flash["message"] }}
+        </div>
+    @endif
 
-Student
-[
-    first_name, last_name, date_of_birth, course, sem, mobile_no, parent_mobile_no, email, password, confirm_password
-] 
+    @if($flash["type"]=="error")
+        <div class="alert alert-danger alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ $flash["message"] }}
+        </div>
+    @endif 
 
-Teacher
-[
-    first_name, last_name, date_of_birth, mobile_no, email, password, confirm_password,
-    qualifications => [
-        [
-            "Qualification", "passing year", "qualification_type"
-        ]
-    ]
-]
+
+    <button type="button" wire:click="$emit('notify')" >Click</button>
+    <script>
+        window.livewire.on('notify', function(){
+            console.log("entered");
+            window.livewire.emit('check_for_flash_messages'); 
+        });
+    </script>
+</div> 
+ 
