@@ -20,9 +20,9 @@ class FormComponent extends Component
 
     public $product = [
         "product_id" => NULL,
-        "name" => "Soya bean",
+        "name" => "",
         "image" => "",
-        "price" => "100",
+        "price" => "",
     ];
 
     public $listeners = [

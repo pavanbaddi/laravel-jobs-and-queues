@@ -11,7 +11,7 @@ class ProductModel extends Model
     protected $primaryKey = 'product_id';
     protected $fillable = ['name', 'image', 'price'];
     
-    public function getImageAttribute(){
+    public function getImageAttribute(){ 
         $image = "";
         if(!empty($this->attributes["image"])){
             $image = url('storage/uploads/'.$this->attributes["image"]);
