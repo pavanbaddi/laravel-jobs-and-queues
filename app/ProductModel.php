@@ -10,12 +10,11 @@ class ProductModel extends Model
     protected $table="products";
     protected $primaryKey = 'product_id';
     protected $fillable = ['name', 'image', 'price'];
-    protected $appends = ["image"];
-
+    
     public function getImageAttribute(){
         $image = "";
-        if(!empty($obj->attributes["image"])){
-            $image = url('public/storage/uploads/'.$obj->attributes["image"]);
+        if(!empty($this->attributes["image"])){
+            $image = url('storage/uploads/'.$this->attributes["image"]);
         }
         return $image;
     }

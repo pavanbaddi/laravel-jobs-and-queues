@@ -35,6 +35,8 @@ class FormComponent extends Component
         try {
             $product = ProductModel::find($product_id)->toArray();
             $this->product = Arr::except($product, ['created_at', 'updated_at', 'deleted_at']);
+
+            // dd($this->product);
         } catch (Throwable $e) {
 
         }
@@ -73,6 +75,7 @@ class FormComponent extends Component
     public function save(){
 
         $rules=[
+            'product_id' => 'nullable',
             'name' => 'required',
             'image' => 'nullable',
             'price' => 'required|integer',
@@ -87,7 +90,7 @@ class FormComponent extends Component
         $validator = Validator::make($this->product,$rules, $messages);
         
         $validator->after(function ($validator) {
-            if(!empty($validator->getData()["image"]) && $this->getFileInfo($validator->getData()["image"])["file_type"] != "image"){
+            if(empty($validator->getData()["product_id"]) && !empty($validator->getData()["image"]) && $this->getFileInfo($validator->getData()["image"])["file_type"] != "image"){
                 $validator->errors()->add('image', 'Must be an image');   
             }
 
@@ -128,7 +131,7 @@ class FormComponent extends Component
 
                 // dd($info);
                 
-                // DB::commit();
+                DB::commit();
                 $info['success'] = TRUE;
             } catch (\Exception $e) {
                 dd($e);
@@ -148,16 +151,10 @@ class FormComponent extends Component
                 $message = "Something went wrong while saving task.";
             }
             
-            $this->emitTo('ecommerce.notification-component', 'flash_message', $type, $message);
+            session()->flash($type, $message);
 
-            if($info["success"]){ 
-                // return redirect()->route('ecommerce.home');
-                
-                // return redirect(route('ecommerce.home'));
-                // return Redirect::route('ecommerce.home');
-                // return Redirect::to(route('ecommerce.home'));
-                return $this->redirect(route('ecommerce.home'));
-                // return redirect()->to(route('ecommerce.product.edit', ["product_id" => $info["product"]["product_id"] ]));
+            if($info["success"]){
+                return redirect()->to(route('ecommerce.product.edit', ["product_id" => $info["product"]["product_id"] ]));
             }
         }
     }

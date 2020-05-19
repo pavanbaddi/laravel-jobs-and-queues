@@ -8,10 +8,15 @@
     @endpush
 
     <div class="title-container">
-        <h2 class="text-center" style="margin: 0;" >Create Product</h2>
+        <h2 class="text-center" style="margin: 0;" >
+        @if(!empty($product["product_id"]))
+            Edit
+        @else
+            Create
+        @endif Product</h2>
     </div>
-
     <br>
+
     <form wire:submit.prevent="save" method="post">
         <input type="hidden" wire:model="product.product_id" >
         <div class="row form-container">
