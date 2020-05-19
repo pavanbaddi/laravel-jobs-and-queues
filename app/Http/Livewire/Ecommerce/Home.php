@@ -10,10 +10,9 @@ class Home extends Component
 {
 
     public $products = [];
+    public $product_layout = "list-view";   
 
-    public $listeners = [
-        // "delete_product" => "deleteProduct",
-    ];
+    public $listeners = [];
 
     public $filter = [
         "name" => "",
@@ -80,8 +79,29 @@ class Home extends Component
         }
     }
 
+    public function productLayout($view_type){
+        $this->product_layout = $view_type;
+    }
+
+    public function addToCart($id){
+        try {
+            // session()->flash("success", "Adding products to cart...");
+            $product = [];
+            foreach($this->products as $k => $v){
+                if($v["product_id"] == $id){
+                    $product = $v;
+                }
+            }
+            dd($product);
+        } catch (Throwable $e) {
+            session()->flash("error", "Something went wrong");
+            $this->products = [];
+        }
+    }
+
     public function render()
     {
         return view('livewire.ecommerce.home');
     } 
 }
+
