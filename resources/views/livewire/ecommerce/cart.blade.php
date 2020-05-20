@@ -26,9 +26,9 @@
                                         @endif
                                     </td>
                                     <td>{{ $v['name'] }}</td>
-                                    <td>{{ $v['quantity'] }}</td>
+                                    <td><input type="number" min="1" class="form-control" wire:model="items.{{ $k }}.quantity" ></td>
                                     <td>{{ $v['price'] }}</td>
-                                    <td>{{ $v['quantity']*$v['price'] }}</td>
+                                    <td>{{ (int)$v['quantity']*$v['price'] }}</td>
                                     <td>
                                         <button type="button" wire:click="removeItem({{ $v['product_id'] }})" class="btn btn-danger btn-sm">Remove</button>
                                     </td>
@@ -41,6 +41,16 @@
                             </tr>
                         @endif
                     </tbody>
+
+                    @if($items)
+                        <tfoot>
+                            <td colspan="2" ></td>
+                            <td wire:model="totals.qty" >{{ $totals["qty"] }}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tfoot>
+                    @endif
                 </table>
                 <!-- table>((thead>tr>(th*3))) -->
             </div>

@@ -9,6 +9,10 @@ use Illuminate\Support\Arr;
 class CartComponent extends Component
 {
     public $items = [];
+    public $totals = [
+        "qty" => 0,
+        "amount" => 0,
+    ];
 
     public function mount()
     {
@@ -23,7 +27,17 @@ class CartComponent extends Component
             "array" => $array
         ] = $cookie_manager->getCookie();
 
+
+        foreach($array["items"] as $k => $v){
+            $this->totals["qty"] += $v["quantity"];
+            $this->totals["amount"] += (int)$v["quantity"]*$v["price"];
+        }
+
         return $array;
+    }
+
+    public function updatedItems(){
+        
     }
 
     public function removeItem($id)
@@ -37,7 +51,7 @@ class CartComponent extends Component
         foreach(($this->items ?? []) as $k => $v){
             if($v["product_id"] == $id){
                 unset($this->items[$k]);
-            }
+            } 
         }
 
         $array['items'] = $this->items;
@@ -45,6 +59,10 @@ class CartComponent extends Component
         $cookie_manager->execute($array);
 
         $this->mount();
+    }
+
+    public function updateQuantity($id)
+    {
     }
 
     public function render()
