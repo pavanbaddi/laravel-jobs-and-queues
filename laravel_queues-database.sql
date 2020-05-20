@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 19, 2020 at 01:07 PM
+-- Generation Time: May 20, 2020 at 03:25 PM
 -- Server version: 5.7.28-0ubuntu0.16.04.2
 -- PHP Version: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -356,7 +356,46 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (4, '2020_04_09_100715_create_jobs_table', 1),
 (5, '2020_05_11_150628_user_profile_table', 2),
 (6, '2020_05_15_174628_create_todo_table', 3),
-(7, '2020_05_17_133623_create_product_table', 4);
+(7, '2020_05_17_133623_create_product_table', 4),
+(8, '2020_05_19_172115_create_order_table', 5),
+(9, '2020_05_19_172426_create_order_items_table', 5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `order_id` bigint(20) UNSIGNED NOT NULL,
+  `customer_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `delivery_address` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mobile_no` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `alternate_mobile_no` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `total_payable_amount` double(8,2) NOT NULL,
+  `status` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_items`
+--
+
+CREATE TABLE `order_items` (
+  `order_item_id` bigint(20) UNSIGNED NOT NULL,
+  `order_id` bigint(20) NOT NULL,
+  `product_id` bigint(20) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` double(8,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -391,7 +430,6 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`product_id`, `name`, `image`, `price`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(43, 'Honor 20i (Phantom Blue, 128 GB)  (4 GB RAM) ', 'HKxGFtCVrB.jpeg', 21560, '2020-05-19 01:59:37', '2020-05-19 01:59:38', NULL),
 (44, 'Motorola One Vision (Sapphire Gradient, 128 GB)  (4 GB RAM) ', '7p8KiKWqYr.jpeg', 14000, '2020-05-19 01:59:57', '2020-05-19 01:59:57', NULL),
 (45, 'OPPO K1 (Astral Blue, 64 GB)  (4 GB RAM) ', 'UEQLY4WJq4.jpeg', 13000, '2020-05-19 02:00:12', '2020-05-19 02:00:12', NULL),
 (46, 'Redmi K20 (Glacier Blue, 64 GB)  (6 GB RAM) ', 'Sud113y8ha.jpeg', 24650, '2020-05-19 02:00:33', '2020-05-19 02:00:33', NULL),
@@ -4850,6 +4888,18 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`order_id`);
+
+--
+-- Indexes for table `order_items`
+--
+ALTER TABLE `order_items`
+  ADD PRIMARY KEY (`order_item_id`);
+
+--
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
@@ -4912,7 +4962,19 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `order_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `order_items`
+--
+ALTER TABLE `order_items`
+  MODIFY `order_item_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `products`

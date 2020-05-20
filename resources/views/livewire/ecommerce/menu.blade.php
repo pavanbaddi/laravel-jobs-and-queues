@@ -21,7 +21,7 @@
             </li>
             
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('ecommerce.home') }}">Cart</a>
+                <a class="nav-link" href="{{ route('ecommerce.cart-items') }}">Cart</a>
             </li>    
         </ul>
     </div>  

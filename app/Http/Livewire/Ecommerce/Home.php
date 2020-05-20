@@ -5,12 +5,15 @@ namespace App\Http\Livewire\Ecommerce;
 use Livewire\Component;
 use App\ProductModel;
 use Log;
+use Cookie;
+use Illuminate\Support\Arr;
+use App\Utils\CookieManager;
 
 class Home extends Component
 {
 
     public $products = [];
-    public $product_layout = "list-view";   
+    public $process_messages = NULL;
 
     public $listeners = [];
 
@@ -22,6 +25,9 @@ class Home extends Component
     ];
     
     public function mount(){
+        // $cookie_manager = new CookieManager();
+        // $cookie_manager->flush();
+
         $this->loadProducts();
     }
 
@@ -79,23 +85,40 @@ class Home extends Component
         }
     }
 
-    public function productLayout($view_type){
-        $this->product_layout = $view_type;
-    }
-
     public function addToCart($id){
         try {
-            // session()->flash("success", "Adding products to cart...");
+            $cookie_manager = new CookieManager();
+            
+            // Check if cookie exits
+            [
+                "array" => $cookie_data
+            ] = $cookie_manager->getCookie();
+
+            // dd($cookie_data,'s');
+
+            if(empty($cookie_data["items"])){
+                $cookie_data["items"] = [];
+            }
+            
             $product = [];
             foreach($this->products as $k => $v){
                 if($v["product_id"] == $id){
                     $product = $v;
                 }
             }
-            dd($product);
+            
+            if($cookie_manager->checkIfProductExistsInCart($id)){
+                $product["quantity"] = 1;
+                array_push($cookie_data["items"], $product);
+
+                $cookie_manager->execute($cookie_data);
+
+                $this->process_messages = "Products added to cart.";
+            }else{
+                $this->process_messages = "Product already exists in cart.";
+            }
         } catch (Throwable $e) {
-            session()->flash("error", "Something went wrong");
-            $this->products = [];
+            $this->process_messages = "Something went wrong.";
         }
     }
 

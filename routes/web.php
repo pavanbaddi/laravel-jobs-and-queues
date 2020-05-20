@@ -66,4 +66,5 @@ Route::group(['prefix' => "ecom"], function () {
     Route::livewire('/products', 'ecommerce.product.list-component')->name('ecommerce.product.list');
     Route::livewire('/product/create', 'ecommerce.product.form-component')->name('ecommerce.product.form');
     Route::livewire('/product/edit/{product_id}', 'ecommerce.product.form-component')->name('ecommerce.product.edit');
+    Route::livewire('/cart-items', 'ecommerce.cart-component')->name('ecommerce.cart-items');
 });

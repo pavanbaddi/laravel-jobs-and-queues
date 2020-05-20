@@ -38,25 +38,7 @@
                 grid-template-columns: repeat(3,1fr);
                 grid-column-gap: 10px;
                 grid-row-gap: 10px;
-            }
-
-            .products-list-container.grid-view > .item{
-                
-            }
-
-            /* List View */
-            .products-list-container.list-view{
-                display: block;
-            }
-
-            .products-list-container.list-view > .item{
-                display: flex;
-                margin-bottom: 10px;
-            }
-
-            .products-list-container.list-view .img-container{
-                width: 150px;
-                margin-right: 15px;
+                margin-top: 15px;
             }
 
             .product-content-container > p{
@@ -111,27 +93,25 @@
 
             <div class="col-md-9">
                 <div class="product-layout-container">
-                    <ul class="pagination">
-                        <li class="page-item"><a wire:click="productLayout('list-view')" class="page-link" href="#">List View</a></li>
-                        <li class="page-item"><a wire:click="productLayout('grid-view')" class="page-link" href="#">Grid View</a></li>
- 
-                        <li class="page-item" style="margin-left:15px;">
-                            <select class="form-control" wire:model="filter.order_field" wire:change="loadProducts" >
-                                <option value="order_by_name_asc">Order name by ascending</option>
-                                <option value="order_by_name_desc">Order name by decending</option>
-                                <option value="order_by_price_low">Price: Low to High</option>
-                                <option value="order_by_price_high">Price: High to Low</option>
-                            </select>
-                        </li>
-                    </ul>
+                    <select style="width: 250px;" class="form-control" wire:model="filter.order_field" wire:change="loadProducts" >
+                        <option value="order_by_name_asc">Order name by ascending</option>
+                        <option value="order_by_name_desc">Order name by decending</option>
+                        <option value="order_by_price_low">Price: Low to High</option>
+                        <option value="order_by_price_high">Price: High to Low</option>
+                    </select>
                 </div>
-                <div class="products-list-container {{ $product_layout }}">
+
+                @if(!empty($process_messages))
+                    {{$process_messages}}
+                @endif
+
+                <div class=" products-list-container grid-view">
                     @if(!empty($products))
                         @foreach($products as $k => $v)
                             <div class="item">
                                 <div class="img-container">
                                     <img src="{{ $v['image'] ?? '' }}" alt="">
-                                </div>
+                                </div> 
 
                                 <div class="product-content-container">
                                     <p>{{ $v['name'] }}</p>
