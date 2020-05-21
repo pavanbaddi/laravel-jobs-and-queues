@@ -91,8 +91,6 @@ class Home extends Component
                 "array" => $cookie_data
             ] = $cookie_manager->getCookie();
 
-            // dd($cookie_data,'s');
-
             if(empty($cookie_data["items"])){
                 $cookie_data["items"] = [];
             }
@@ -115,7 +113,7 @@ class Home extends Component
                 session()->flash("info", "Product already exists in cart.");
             }
         } catch (Throwable $e) {
-            $this->process_messages = "Something went wrong.";
+            session()->flash("error", "Something went wrong.");
         }
     }
 

@@ -35,13 +35,9 @@ class FormComponent extends Component
         try {
             $product = ProductModel::find($product_id)->toArray();
             $this->product = Arr::except($product, ['created_at', 'updated_at', 'deleted_at']);
-
-            // dd($this->product);
         } catch (Throwable $e) {
 
         }
-
-        
     }
 
     public function fileUploaded($file){
@@ -128,8 +124,6 @@ class FormComponent extends Component
                 }
 
                 $info["product"]->save();
-
-                // dd($info);
                 
                 DB::commit();
                 $info['success'] = TRUE;

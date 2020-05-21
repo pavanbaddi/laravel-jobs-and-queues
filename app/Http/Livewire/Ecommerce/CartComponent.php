@@ -59,7 +59,9 @@ class CartComponent extends Component
         [
             "array" => $array
         ] = $cookie_manager->getCookie();
+
         $array["items"] = $this->items;
+
         $cookie_manager->execute($array);
     }
 
@@ -74,7 +76,7 @@ class CartComponent extends Component
         foreach(($array['items'] ?? []) as $k => $v){
             if($v["product_id"] == $id){
                 unset($array['items'][$k]);
-            } 
+            }
         }
 
         $this->items = $array['items'];
