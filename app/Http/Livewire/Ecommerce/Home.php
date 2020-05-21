@@ -25,9 +25,6 @@ class Home extends Component
     ];
     
     public function mount(){
-        // $cookie_manager = new CookieManager();
-        // $cookie_manager->flush();
-
         $this->loadProducts();
     }
 
@@ -113,9 +110,9 @@ class Home extends Component
 
                 $cookie_manager->execute($cookie_data);
 
-                $this->process_messages = "Products added to cart.";
+                session()->flash("success", "Products added to cart.");
             }else{
-                $this->process_messages = "Product already exists in cart.";
+                session()->flash("info", "Product already exists in cart.");
             }
         } catch (Throwable $e) {
             $this->process_messages = "Something went wrong.";

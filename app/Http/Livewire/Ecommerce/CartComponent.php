@@ -5,10 +5,21 @@ namespace App\Http\Livewire\Ecommerce;
 use Livewire\Component;
 use App\Utils\CookieManager;
 use Illuminate\Support\Arr;
+use App\Http\Requests\SaveOrderRequest;
+use DB;
+use App\OrderModel;
+use App\OrderItemModel;
 
 class CartComponent extends Component
 {
     public $items = [];
+    public $order_form = [
+        'customer_name' => 'John',
+        'email' => 'example@gmail.com',
+        'delivery_address' => 'sample address',
+        'mobile_no' => '9956842785',
+        'alternate_mobile_no' => '945652587',
+    ];
     public $totals = [
         "qty" => 0,
         "amount" => 0,
@@ -37,7 +48,19 @@ class CartComponent extends Component
     }
 
     public function updatedItems(){
-        
+        $cookie_manager = new CookieManager();
+        $this->totals["qty"] = 0;
+        $this->totals["amount"] = 0;
+        foreach(($this->items ?? []) as $k => $v){
+            $this->totals["qty"] += $v["quantity"];
+            $this->totals["amount"] += (int)$v["quantity"]*$v["price"];
+        }
+
+        [
+            "array" => $array
+        ] = $cookie_manager->getCookie();
+        $array["items"] = $this->items;
+        $cookie_manager->execute($array);
     }
 
     public function removeItem($id)
@@ -48,21 +71,71 @@ class CartComponent extends Component
             "array" => $array
         ] = $cookie_manager->getCookie();
 
-        foreach(($this->items ?? []) as $k => $v){
+        foreach(($array['items'] ?? []) as $k => $v){
             if($v["product_id"] == $id){
-                unset($this->items[$k]);
+                unset($array['items'][$k]);
             } 
         }
 
-        $array['items'] = $this->items;
+        $this->items = $array['items'];
 
         $cookie_manager->execute($array);
 
-        $this->mount();
+        session()->flash('success', "Item removed from cart.");
+
+        $this->updatedItems();
     }
 
-    public function updateQuantity($id)
-    {
+    public function saveOrder(){
+        $saveOrderRequest = new SaveOrderRequest();
+        $saveOrderRequest->merge($this->order_form);
+
+        $validated_data = $saveOrderRequest->validate($saveOrderRequest->rules());
+
+        DB::beginTransaction(); 
+        try {
+            $query = [
+                "customer_name" => $validated_data["customer_name"],
+                "email" => $validated_data["email"],
+                "delivery_address" => $validated_data["delivery_address"],
+                "mobile_no" => $validated_data["mobile_no"],
+                "alternate_mobile_no" => $validated_data["alternate_mobile_no"],
+                "total_payable_amount" => $this->totals["amount"],
+                "status" => "pending",
+            ];
+
+            $info["order"] = OrderModel::create($query);
+
+            foreach($this->items as $k => $v){
+                $query = [
+                    "product_id" => $v["product_id"],
+                    "quantity" => $v["quantity"],
+                    "price" => $v["price"],
+                ];
+                $info["order"]->items()->create($query);
+            }
+            
+            // DB::commit();
+            $info['success'] = TRUE;
+        } catch (\Exception $e) {
+            DB::rollback();
+            $info['success'] = FALSE;
+        }
+
+        if($info["success"]){ 
+
+            // empty cookie data
+            // $cookie_manager = new CookieManager();
+            // $cookie_manager->flush();
+
+            $type = "success";
+            $message = "New order confirmed.";
+        }else{
+            $type = "error";
+            $message = "Something went wrong while saving order.";
+        }
+
+        session()->flash($type, $message);
     }
 
     public function render()

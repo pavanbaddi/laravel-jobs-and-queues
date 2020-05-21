@@ -20,16 +20,11 @@
 <body>
     @livewire('ecommerce.menu-component')
     
-    @livewire('ecommerce.notification-component')
-
     @yield('content')
-
 
     <script src="{{ url('assets/js/jquery.min.js') }}" data-turbolinks-eval=false ></script>
     <script src="{{ url('assets/js/popper.min.js') }}" data-turbolinks-eval=false ></script>
     <script src="{{ url('assets/js/bootstrap.min.js') }}" data-turbolinks-eval=false ></script>
-
-    
 
     @stack('scripts')
 </body>

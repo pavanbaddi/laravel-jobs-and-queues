@@ -1,5 +1,6 @@
 <div class="container" >
-
+    @include('livewire.ecommerce.notification')
+    
     @push('styles')
         <style>
             .content-container{
