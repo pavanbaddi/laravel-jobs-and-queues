@@ -43,7 +43,7 @@
                                         @endif
                                     </td>
                                     <td>{{ $v['name'] }}</td>
-                                    <td><input type="number" min="1" class="form-control" wire:model="order_form.items.{{ $k }}.quantity" ></td>
+                                    <td><input type="number" min="1" class="form-control" wire:model="items.{{ $k }}.quantity" ></td>
                                     <td>{{ $v['price'] }}</td>
                                     <td>{{ (int)$v['quantity']*$v['price'] }}</td>
                                     <td>
@@ -69,7 +69,6 @@
                         </tfoot>
                     @endif
                 </table>
-                <!-- table>((thead>tr>(th*3))) -->
             </div>
         </div>
         <div class="col-md-4">

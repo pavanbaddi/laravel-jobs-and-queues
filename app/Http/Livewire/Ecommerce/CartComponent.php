@@ -14,11 +14,11 @@ class CartComponent extends Component
 {
     public $items = [];
     public $order_form = [
-        'customer_name' => 'John',
-        'email' => 'example@gmail.com',
-        'delivery_address' => 'sample address',
-        'mobile_no' => '9956842785',
-        'alternate_mobile_no' => '945652587',
+        'customer_name' => '',
+        'email' => '',
+        'delivery_address' => '',
+        'mobile_no' => '',
+        'alternate_mobile_no' => '',
     ];
     public $totals = [
         "qty" => 0,
@@ -39,7 +39,7 @@ class CartComponent extends Component
         ] = $cookie_manager->getCookie();
 
 
-        foreach($array["items"] as $k => $v){
+        foreach(($array["items"] ?? []) as $k => $v){
             $this->totals["qty"] += $v["quantity"];
             $this->totals["amount"] += (int)$v["quantity"]*$v["price"];
         }
@@ -115,8 +115,16 @@ class CartComponent extends Component
                 $info["order"]->items()->create($query);
             }
             
-            // DB::commit();
+            DB::commit();
             $info['success'] = TRUE;
+
+            $this->order_form = [
+                'customer_name' => '',
+                'email' => '',
+                'delivery_address' => '',
+                'mobile_no' => '',
+                'alternate_mobile_no' => '',
+            ];
         } catch (\Exception $e) {
             DB::rollback();
             $info['success'] = FALSE;
@@ -125,8 +133,9 @@ class CartComponent extends Component
         if($info["success"]){ 
 
             // empty cookie data
-            // $cookie_manager = new CookieManager();
-            // $cookie_manager->flush();
+            $cookie_manager = new CookieManager();
+            $cookie_manager->flush();
+            $this->items = [];
 
             $type = "success";
             $message = "New order confirmed.";
