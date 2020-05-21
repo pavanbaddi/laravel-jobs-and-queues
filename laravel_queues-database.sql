@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 20, 2020 at 03:25 PM
+-- Generation Time: May 21, 2020 at 02:04 PM
 -- Server version: 5.7.28-0ubuntu0.16.04.2
 -- PHP Version: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -380,6 +380,13 @@ CREATE TABLE `orders` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `customer_name`, `email`, `delivery_address`, `mobile_no`, `alternate_mobile_no`, `total_payable_amount`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'John', 'john@gmail.com', 'Plot no 5, NW road, Michighan, USA', '896541285', '94856214745', 74150.00, 'pending', '2020-05-21 03:00:06', '2020-05-21 03:00:06', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -396,6 +403,14 @@ CREATE TABLE `order_items` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`order_item_id`, `order_id`, `product_id`, `quantity`, `price`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 47, 1, 24850.00, '2020-05-21 03:00:06', '2020-05-21 03:00:06', NULL),
+(2, 1, 46, 2, 24650.00, '2020-05-21 03:00:06', '2020-05-21 03:00:06', NULL);
 
 -- --------------------------------------------------------
 
@@ -435,7 +450,8 @@ INSERT INTO `products` (`product_id`, `name`, `image`, `price`, `created_at`, `u
 (46, 'Redmi K20 (Glacier Blue, 64 GB)  (6 GB RAM) ', 'Sud113y8ha.jpeg', 24650, '2020-05-19 02:00:33', '2020-05-19 02:00:33', NULL),
 (47, 'Redmi K20 Pro (Glacier Blue, 128 GB)  (6 GB RAM) ', 'ZqncUoseHU.jpeg', 24850, '2020-05-19 02:00:58', '2020-05-19 02:00:58', NULL),
 (48, 'Samsung Galaxy A50 (Blue, 64 GB)  (4 GB RAM) ', 'eqnMDxOnf7.jpeg', 15866, '2020-05-19 02:01:13', '2020-05-19 02:01:13', NULL),
-(49, 'Samsung Galaxy A70 (Blue, 128 GB)  (6 GB RAM) ', 'k6Z92cHWh6.jpeg', 22700, '2020-05-19 02:01:29', '2020-05-19 02:01:29', NULL);
+(49, 'Samsung Galaxy A70 (Blue, 128 GB)  (6 GB RAM) ', 'k6Z92cHWh6.jpeg', 22700, '2020-05-19 02:01:29', '2020-05-19 02:01:29', NULL),
+(50, 'Honor 20i (Phantom Blue, 128 GB)  (4 GB RAM) ', 'uU723k6TgF.jpeg', 24500, '2020-05-21 02:58:33', '2020-05-21 02:58:33', NULL);
 
 -- --------------------------------------------------------
 
@@ -4968,19 +4984,19 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `order_item_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `order_item_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `product_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `states_census`

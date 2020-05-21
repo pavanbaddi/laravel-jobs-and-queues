@@ -18,7 +18,7 @@
     @stack('styles')
 </head>
 <body>
-    @livewire('ecommerce.menu-component')
+    @livewire('ecommerce.menu-component') 
     
     @yield('content')
 
