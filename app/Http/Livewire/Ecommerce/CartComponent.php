@@ -100,7 +100,7 @@ class CartComponent extends Component
                 "delivery_address" => $validated_data["delivery_address"],
                 "mobile_no" => $validated_data["mobile_no"],
                 "alternate_mobile_no" => $validated_data["alternate_mobile_no"],
-                "total_payable_amount" => $this->totals["amount"],
+                "total_payable_amount" => $this->totals["amount"], 
                 "status" => "pending",
             ];
 
