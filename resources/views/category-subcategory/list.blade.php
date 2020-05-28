@@ -41,7 +41,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <label for="">Name</label>
-                    <input type="text" name="name" class="form-control" value="{{ (isset($category['name']))? $category['name'] : '' }}" >
+                    <input type="text" name="name" class="form-control" value="" >
                     @if($errors->first('name'))
                         <label for="" style="color:red;">{{ $errors->first('name') }}</label>
                     @endif
