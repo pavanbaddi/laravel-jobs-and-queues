@@ -68,3 +68,9 @@ Route::group(['prefix' => "ecom"], function () {
     Route::livewire('/product/edit/{product_id}', 'ecommerce.product.form-component')->name('ecommerce.product.edit');
     Route::livewire('/cart-items', 'ecommerce.cart-component')->name('ecommerce.cart-items');
 });
+
+
+// Category and Subcategory
+
+Route::get('category-subcategory/create', 'CategoryController@create');
+ 
