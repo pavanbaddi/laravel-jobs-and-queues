@@ -7,28 +7,12 @@
     <link rel="stylesheet" href="{{ url('assets/css/bootstrap.min.css') }}">
 </head>
 <body>
-    
+
+    @include('category-subcategory.menu', [])
+
     <div class="container">
 
-        @if(session()->get('success'))
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="alert alert-success">
-                    {{ session()->get('success') }}
-                    </div>
-                </div>
-            </div>
-        @endif
-
-        @if(session()->get('error'))
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="alert alert-danger">
-                    {{ session()->get('error') }}
-                    </div>
-                </div>
-            </div>
-        @endif
+        @include('category-subcategory.notification', [])
 
         <div class="row">
             <div class="col-md-6">
