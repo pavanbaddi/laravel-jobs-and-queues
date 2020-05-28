@@ -18,7 +18,16 @@
 
         <div class="row">
             <div class="col-md-6">
-                    
+                <ul class="main">
+                    @foreach($categories as $k => $v)
+                        <li class="item">{{ $v['name'] }}</li>
+
+                        @if(!empty($v->categories))
+                            @include('category-subcategory.child-includes.child-category-view', [ 'v' => $v])
+                        @endif
+
+                    @endforeach
+                </ul>
             </div>
         </div>
 
