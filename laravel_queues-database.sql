@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 21, 2020 at 02:04 PM
+-- Generation Time: May 28, 2020 at 08:54 PM
 -- Server version: 5.7.28-0ubuntu0.16.04.2
 -- PHP Version: 7.2.24-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -21,6 +21,44 @@ SET time_zone = "+00:00";
 --
 -- Database: `laravel_queues`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `category_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `parent_id` bigint(20) NOT NULL DEFAULT '0',
+  `sort_order` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`category_id`, `name`, `parent_id`, `sort_order`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Vehicles', 2, 1, '2020-05-28 05:05:47', '2020-05-28 08:33:20', NULL),
+(2, '2 Wheeler', 0, 2, '2020-05-28 05:06:02', '2020-05-28 09:45:10', NULL),
+(3, 'Hero Passion Pro', 1, 1, '2020-05-28 05:06:17', '2020-05-28 08:43:18', NULL),
+(4, 'Scooter', 1, 2, '2020-05-28 05:06:38', '2020-05-28 08:43:18', NULL),
+(5, 'Electronics', 0, 1, '2020-05-28 05:07:06', '2020-05-28 09:45:10', NULL),
+(6, 'Television', 5, 1, '2020-05-28 05:07:15', '2020-05-28 09:41:27', NULL),
+(7, 'Mobile', 6, 1, '2020-05-28 05:07:28', '2020-05-28 09:41:40', NULL),
+(8, 'PC', 5, 3, '2020-05-28 05:08:02', '2020-05-28 08:39:07', NULL),
+(9, 'Laptop', 8, 1, '2020-05-28 05:08:13', '2020-05-28 08:43:18', NULL),
+(10, 'Dell XPS Laptop', 9, 1, '2020-05-28 05:08:27', '2020-05-28 08:43:18', NULL),
+(14, 'Fashion', 0, 3, '2020-05-28 09:41:56', '2020-05-28 09:45:10', NULL),
+(15, 'Male Fashion', 14, 1, '2020-05-28 09:42:10', '2020-05-28 09:44:07', NULL),
+(16, 'Female Fashion', 14, 1, '2020-05-28 09:42:24', '2020-05-28 09:44:47', NULL),
+(18, 'Formal Clothing', 15, 1, '2020-05-28 09:43:04', '2020-05-28 09:45:10', NULL),
+(19, 'Saree', 16, 2, '2020-05-28 09:43:25', '2020-05-28 09:44:47', NULL),
+(20, 'Frog Dress', 16, 1, '2020-05-28 09:43:46', '2020-05-28 09:44:47', NULL);
 
 -- --------------------------------------------------------
 
@@ -358,7 +396,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (6, '2020_05_15_174628_create_todo_table', 3),
 (7, '2020_05_17_133623_create_product_table', 4),
 (8, '2020_05_19_172115_create_order_table', 5),
-(9, '2020_05_19_172426_create_order_items_table', 5);
+(9, '2020_05_19_172426_create_order_items_table', 5),
+(10, '2020_05_28_064056_create_categories_table', 6);
 
 -- --------------------------------------------------------
 
@@ -4879,6 +4918,12 @@ INSERT INTO `users_profile` (`id`, `user_id`, `role`, `date_of_birth`, `mobile_n
 --
 
 --
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`category_id`);
+
+--
 -- Indexes for table `countries_census`
 --
 ALTER TABLE `countries_census`
@@ -4957,6 +5002,12 @@ ALTER TABLE `users_profile`
 --
 
 --
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `category_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
 -- AUTO_INCREMENT for table `countries_census`
 --
 ALTER TABLE `countries_census`
@@ -4978,7 +5029,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `orders`
