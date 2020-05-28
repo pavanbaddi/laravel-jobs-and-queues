@@ -8,11 +8,11 @@
 </head>
 <body>
 
-    @include('category-subcategory.menu', [])
+    @include('category-subcategory.includes.menu')
 
     <div class="container">
 
-        @include('category-subcategory.notification', [])
+        @include('category-subcategory.includes.notification')
 
         <div class="row">
             <div class="col-md-6">
@@ -40,7 +40,7 @@
                     <select name="parent_id" class="form-control">
                         <option value="">Choose One</option>
                         @foreach($categories as $k => $v)
-                            <option value="{{ $v['category_id'] }}" {{ (isset($category['category_id']) && $category['category_id'] == $v['category_id'])? 'selected="selected"' : '' }} >{{ $v['name'] }}</option>
+                            <option value="{{ $v['category_id'] }}" {{ (isset($category['parent_id']) && $category['parent_id'] == $v['category_id'])? 'selected="selected"' : '' }} >{{ $v['name'] }}</option>
                         @endforeach
                     </select>
                 </div>

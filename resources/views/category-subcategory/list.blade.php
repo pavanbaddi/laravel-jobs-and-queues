@@ -7,70 +7,22 @@
     <link rel="stylesheet" href="{{ url('assets/css/bootstrap.min.css') }}">
 </head>
 <body>
+
+    @include('category-subcategory.includes.menu')
     
     <div class="container">
 
-        @if(session()->get('success'))
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="alert alert-success">
-                    {{ session()->get('success') }}
-                    </div>
-                </div>
-            </div>
-        @endif
+        @include('category-subcategory.includes.notification')
 
-        @if(session()->get('error'))
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="alert alert-danger">
-                    {{ session()->get('error') }}
-                    </div>
-                </div>
-            </div>
-        @endif
+        <h2> List of Category</h2>
 
         <div class="row">
             <div class="col-md-6">
-                <h2> {{ (isset($category['category_id']))? "Edit" : "Create" }} Category Form</h2>
+                    
             </div>
         </div>
 
-        <form action="{{ route('category-subcategory.store') }}" method="post">
-            @csrf
-            <div class="row">
-                <div class="col-md-6">
-                    <label for="">Name</label>
-                    <input type="text" name="name" class="form-control" value="" >
-                    @if($errors->first('name'))
-                        <label for="" style="color:red;">{{ $errors->first('name') }}</label>
-                    @endif
-                </div>
-            </div>
-
-            <br>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <label for="">Parent Category ID</label>
-                    <select name="parent_id" class="form-control">
-                        <option value="">Choose One</option>
-                        @foreach($categories as $k => $v)
-                            <option value="{{ $v['category_id'] }}" {{ (isset($category['category_id']) && $category['category_id'] == $v['category_id'])? 'selected="selected"' : '' }} >{{ $v['name'] }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-            
-            <br>
-            
-            <div class="row">
-                <div class="col-md-6">
-                    <input type="submit" class="btn btn-success" value="Save">
-                </div>
-            </div>
-
-        </form>
+        
     </div>
 
 

@@ -11,4 +11,9 @@ class CategoryModel extends Model
     protected $primaryKey = 'category_id';
     protected $fillable = ['name', 'parent_id', 'sort_order'];
 
+
+    public function categories()
+    {
+        return $this->hasMany(CategoryModel::class, 'parent_id', 'category_id');
+    }
 }

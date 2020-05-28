@@ -16,6 +16,8 @@ class CategoryController extends Controller
             'categories' => CategoryModel::where(['parent_id' => 0])->get(),
         ];
 
+        dd($info['categories'][1]->categories);
+
         return view('category-subcategory.list', $info);
     }
 

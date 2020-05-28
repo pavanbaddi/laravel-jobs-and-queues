@@ -71,6 +71,7 @@ Route::group(['prefix' => "ecom"], function () {
 
 
 // Category and Subcategory
+Route::get('category-subcategory/list', 'CategoryController@index')->name('category-subcategory.list');
 Route::get('category-subcategory/create', 'CategoryController@create')->name('category-subcategory.create');
 Route::post('category-subcategory/save', 'CategoryController@store')->name('category-subcategory.store');
 Route::get('category-subcategory/edit/{category_id}', 'CategoryController@edit')->name('category-subcategory.edit');
