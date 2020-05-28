@@ -22,6 +22,9 @@
 
         <form action="{{ route('category-subcategory.store') }}" method="post">
             @csrf
+            @if(isset($category['category_id']))
+                <input type="hidden" name="category_id" value="{{ $category['category_id'] }}" >
+            @endif
             <div class="row">
                 <div class="col-md-6">
                     <label for="">Name</label>

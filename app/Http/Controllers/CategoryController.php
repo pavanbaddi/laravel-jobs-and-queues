@@ -164,4 +164,11 @@ class CategoryController extends Controller
 
         return view('category-subcategory.create', $info);
     }
+
+    public function remove(Request $request){
+        $category = CategoryModel::find($request->category_id);
+        $category->delete();
+
+        return redirect(route('category-subcategory.list'))->with('success', "Category removed successfully.");
+    }
 }

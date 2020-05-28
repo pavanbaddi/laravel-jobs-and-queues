@@ -20,16 +20,16 @@
         <div class="row">
             <div class="col-md-12 dd" id="nestable-wrapper">
                 <ol class="dd-list list-group">
-                    @foreach($categories as $k => $v)
-                        <li class="dd-item list-group-item" data-id="{{ $v['category_id'] }}" >
-                            <div class="dd-handle" >{{ $v['name'] }}</div>
+                    @foreach($categories as $k => $category)
+                        <li class="dd-item list-group-item" data-id="{{ $category['category_id'] }}" >
+                            <div class="dd-handle" >{{ $category['name'] }}</div>
                             <div class="dd-option-handle">
-                                <button type="button" class="btn btn-success btn-sm" >Edit</button> 
-                                <button type="button" class="btn btn-danger btn-sm" >Delete</button>
+                                <a href="{{ route('category-subcategory.edit', ['category_id' => $category['category_id'] ]) }}" class="btn btn-success btn-sm" >Edit</a> 
+                                <a href="{{ route('category-subcategory.remove', ['category_id' => $category['category_id'] ]) }}" class="btn btn-danger btn-sm" >Delete</a> 
                             </div>
 
-                            @if(!empty($v->categories))
-                                @include('category-subcategory.child-includes.child-category-view', [ 'v' => $v])
+                            @if(!empty($category->categories))
+                                @include('category-subcategory.child-includes.child-category-view', [ 'category' => $category])
                             @endif
                         </li>
                     @endforeach
@@ -37,11 +37,13 @@
             </div>
         </div>
 
-        <form action="{{ route('category-subcategory.save-nested-categories') }}" method="post">
-            @csrf
-            <textarea name="nested_category_array" id="nestable-output"></textarea>
-            <button type="submit" class="btn btn-success" >Save Categories</button>
-        </form>
+        <div class="row">
+            <form action="{{ route('category-subcategory.save-nested-categories') }}" method="post">
+                @csrf
+                <textarea style="display: none;" name="nested_category_array" id="nestable-output"></textarea>
+                <button type="submit" class="btn btn-success" style="margin-top: 15px;" >Save category</button>
+            </form>
+        </div>
         
         
     </div>

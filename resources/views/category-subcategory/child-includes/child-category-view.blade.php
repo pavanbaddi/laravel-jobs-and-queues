@@ -1,14 +1,14 @@
-@if(!empty($v->categories))
+@if(!empty($category->categories))
     <ol class="dd-list list-group">
-        @foreach($v->categories as $kk => $vv)
-            <li class="dd-item list-group-item" data-id="{{ $vv['category_id'] }}" >
-                <div class="dd-handle" >{{ $vv['name'] }}</div>
+        @foreach($category->categories as $kk => $sub_category)
+            <li class="dd-item list-group-item" data-id="{{ $sub_category['category_id'] }}" >
+                <div class="dd-handle" >{{ $sub_category['name'] }}</div>
                 <div class="dd-option-handle">
-                    <button type="button" class="btn btn-success btn-sm" >Edit</button> 
-                    <button type="button" class="btn btn-danger btn-sm" >Delete</button>
+                <a href="{{ route('category-subcategory.edit', ['category_id' => $sub_category['category_id'] ]) }}" class="btn btn-success btn-sm" >Edit</a> 
+                <a href="{{ route('category-subcategory.remove', ['category_id' => $sub_category['category_id'] ]) }}" class="btn btn-danger btn-sm" >Delete</a>
                 </div>
 
-                @include('category-subcategory.child-includes.child-category-view', [ 'v' => $vv])
+                @include('category-subcategory.child-includes.child-category-view', [ 'category' => $sub_category])
             </li>
         @endforeach
     </ol>
