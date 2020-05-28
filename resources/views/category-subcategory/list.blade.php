@@ -15,7 +15,9 @@
 
         @include('category-subcategory.includes.notification')
 
-        <h2> List of Category</h2>
+        <h2 class="text-center">Laravel Drag, Drop and Sort Categories SubCategories using JQuery</h2>
+
+        <h4> List of Category</h4>
 
         <div class="row">
             <div class="col-md-12 dd" id="nestable-wrapper">
