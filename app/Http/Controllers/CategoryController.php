@@ -12,26 +12,8 @@ class CategoryController extends Controller
 {
 
     public function index(Request $request){
-
-        $json = '[{"id":1,"children":[{"id":2,"children":[{"id":3,"children":[]},{"id":4,"children":[]}]}]},{"id":5,"children":[{"id":6,"children":[{"id":7,"children":[{"id":8,"children":[{"id":9,"children":[{"id":10,"children":[]}]}]}]}]}]}]';
-
-        $decoded_json = json_decode($json, TRUE);
-        // dd($decoded_json);
-
-        $simplified_list = [];
-        $r = $this->recur1($decoded_json, $simplified_list);
-        // $r = $this->convertedNestedArrayToSimplifiedList($decoded_json, $simplified_list);
-
-        // return $decoded_json;
-        dd($simplified_list);
-
-
-
-
-
-
         $info = [
-            'categories' => CategoryModel::where(['parent_id' => 0])->get(),
+            'categories' => CategoryModel::where(['parent_id' => 0])->orderBy('sort_order', 'ASC')->get(),
         ];
 
         // dd($info['categories'][1]->categories);
@@ -39,67 +21,88 @@ class CategoryController extends Controller
         return view('category-subcategory.list', $info);
     }
 
+    public function saveNestedCategories(Request $request){
+        
+        $json = $request->nested_category_array;
+        $decoded_json = json_decode($json, TRUE);
+        // dd($decoded_json);
+
+        $simplified_list = [];
+        $this->recur1($decoded_json, $simplified_list);
+        // dd($simplified_list);
+
+        DB::beginTransaction();
+        try {
+            $info = [
+                "success" => FALSE,
+            ];
+
+            foreach($simplified_list as $k => $v){
+                $category = CategoryModel::find($v['category_id']);
+                $category->fill([
+                    "parent_id" => $v['parent_id'],
+                    "sort_order" => $v['sort_order'],
+                ]);
+
+                $category->save();
+            }
+
+            DB::commit();
+            $info['success'] = TRUE;
+        } catch (\Exception $e) {
+            dd($e);
+            DB::rollback();
+            $info['success'] = FALSE;
+        }
+
+        if($info['success']){
+            $request->session()->flash('success', "All Categories updated.");
+        }else{
+            $request->session()->flash('error', "Something went wrong while updating...");
+        }
+
+        return redirect(route('category-subcategory.list'));
+    }
+
     public function recur1($nested_array=[], &$simplified_list=[]){
+        
         static $counter = 0;
         
-        if(!isset($nested_array[0])){
-            $nested_array = $nested_array['children'];
-        }
-
-        // if($counter==2){
-        //     dd($simplified_list, $nested_array);
-        // }
-
         foreach($nested_array as $k => $v){
-            $simplified_list[] = ["category_id" => $v['id'], 'parent_id' => NULL];
+            
+            $sort_order = $k+1;
+            $simplified_list[] = [
+                "category_id" => $v['id'], 
+                "parent_id" => 0, 
+                "sort_order" => $sort_order
+            ];
+            
             if(!empty($v["children"])){
                 $counter+=1;
-                $this->recur2($v['children'], $simplified_list);
+                $this->recur2($v['children'], $simplified_list, $v['id']);
             }
-            // dd($simplified_list,44);
-        }
 
-        dd($simplified_list);
+        }
     }
 
-    public function recur2($sub_nested_array=[], &$simplified_list=[]){
+    public function recur2($sub_nested_array=[], &$simplified_list=[], $parent_id = NULL){
+        
         static $counter = 0;
+
         foreach($sub_nested_array as $k => $v){
-            $simplified_list[] = ["category_id" => $v['id'], 'parent_id' => NULL];
-            // dd($v, $simplified_list);
+            
+            $sort_order = $k+1;
+            $simplified_list[] = [
+                "category_id" => $v['id'], 
+                "parent_id" => $parent_id, 
+                "sort_order" => $sort_order
+            ];
+            
             if(!empty($v["children"])){
                 $counter+=1;
-                if($counter==2){
-                    // dd($simplified_list, $sub_nested_array);
-                }
-                return $this->recur2($v['children'], $simplified_list);
+                return $this->recur2($v['children'], $simplified_list, $v['id']);
             }
-            // dd($simplified_list,45);
         }
-    }
-
-    public function convertedNestedArrayToSimplifiedList($nested_array=[], &$simplified_list=[], $next_array_item = NULL, &$counter=0){
-        $arr = (!empty($next_array_item))?  $next_array_item[0] : $nested_array[0];
-
-        // if($counter==1){
-        //     dd($arr, 'ss');
-        // }
-
-        $key = rand(0,1000);
-        $simplified_list[$key] = ["category_id" => $arr['id'], "parent_id" => NULL, "childs" => [] ];
-
-        if($counter==1){
-            // dd($arr);
-        }
-
-        if(isset($arr['children']) && !empty( $arr['children'] )){
-            $counter+=1;
-            if($counter==5){
-                // dd($simplified_list);
-            }
-            return $this->convertedNestedArrayToSimplifiedList( $nested_array, $simplified_list[$key], $arr['children'], $counter );
-        }
-        dd($simplified_list);
     }
 
     public function create(Request $request){

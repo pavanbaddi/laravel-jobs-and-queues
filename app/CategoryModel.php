@@ -14,6 +14,6 @@ class CategoryModel extends Model
 
     public function categories()
     {
-        return $this->hasMany(CategoryModel::class, 'parent_id', 'category_id');
+        return $this->hasMany(CategoryModel::class, 'parent_id', 'category_id')->orderBy('sort_order', 'ASC');
     }
 }

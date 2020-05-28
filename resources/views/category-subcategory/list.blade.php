@@ -37,7 +37,12 @@
             </div>
         </div>
 
-        <textarea id="nestable-output"></textarea>
+        <form action="{{ route('category-subcategory.save-nested-categories') }}" method="post">
+            @csrf
+            <textarea name="nested_category_array" id="nestable-output"></textarea>
+            <button type="submit" class="btn btn-success" >Save Categories</button>
+        </form>
+        
         
     </div>
 
