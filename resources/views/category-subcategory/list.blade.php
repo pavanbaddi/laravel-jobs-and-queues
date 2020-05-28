@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Category Form</title>
-    <link rel="stylesheet" href="{{ url('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url('category-subcategory-assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url('category-subcategory-assets/css/style.css') }}">
 </head>
 <body>
 
@@ -17,25 +18,37 @@
         <h2> List of Category</h2>
 
         <div class="row">
-            <div class="col-md-6">
-                <ul class="main">
+            <div class="col-md-12 dd" id="nestable-wrapper">
+                <ol class="dd-list list-group">
                     @foreach($categories as $k => $v)
-                        <li class="item">{{ $v['name'] }}</li>
+                        <li class="dd-item list-group-item" data-id="{{ $v['category_id'] }}" >
+                            <div class="dd-handle" >{{ $v['name'] }}</div>
+                            <div class="dd-option-handle">
+                                <button type="button" class="btn btn-success btn-sm" >Edit</button> 
+                                <button type="button" class="btn btn-danger btn-sm" >Delete</button>
+                            </div>
 
-                        @if(!empty($v->categories))
-                            @include('category-subcategory.child-includes.child-category-view', [ 'v' => $v])
-                        @endif
-
+                            @if(!empty($v->categories))
+                                @include('category-subcategory.child-includes.child-category-view', [ 'v' => $v])
+                            @endif
+                        </li>
                     @endforeach
-                </ul>
+                </ol>
             </div>
         </div>
 
+        <textarea id="nestable-output"></textarea>
         
     </div>
 
 
-    <script src="{{ url('assets/js/jquery.min.js') }}"></script>
-    <script src="{{ url('assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url('category-subcategory-assets/js/jquery-3.5.1.slim.min.js') }}"></script>
+    <script src="{{ url('category-subcategory-assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url('category-subcategory-assets/js/popper.min.js') }}"></script>
+    
+    
+    <script src="{{ url('category-subcategory-assets/js/jquery.nestable.js') }}"></script>
+
+    <script src="{{ url('category-subcategory-assets/js/style.js') }}"></script>
 </body>
 </html>
