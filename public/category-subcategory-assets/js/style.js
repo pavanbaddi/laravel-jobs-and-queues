@@ -19,8 +19,6 @@ $(document).ready(function()
     })
     .on('change', updateOutput);
 
-   
-
     // output initial serialised data
     updateOutput($('#nestable-wrapper').data('output', $('#nestable-output')));
    

@@ -70,7 +70,7 @@ Route::group(['prefix' => "ecom"], function () {
 });
 
 
-// Category and Subcategory
+// Category and Subcategory Routes
 Route::get('category-subcategory/list', 'CategoryController@index')->name('category-subcategory.list');
 Route::post('category-subcategory/save-nested-categories', 'CategoryController@saveNestedCategories')->name('category-subcategory.save-nested-categories');
 

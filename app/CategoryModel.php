@@ -17,3 +17,4 @@ class CategoryModel extends Model
         return $this->hasMany(CategoryModel::class, 'parent_id', 'category_id')->orderBy('sort_order', 'ASC');
     }
 }
+ 

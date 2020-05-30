@@ -15,9 +15,7 @@ class CategoryController extends Controller
         $info = [
             'categories' => CategoryModel::where(['parent_id' => 0])->orderBy('sort_order', 'ASC')->get(),
         ];
-
-        // dd($info['categories'][1]->categories);
-
+        
         return view('category-subcategory.list', $info);
     }
 
@@ -25,11 +23,9 @@ class CategoryController extends Controller
         
         $json = $request->nested_category_array;
         $decoded_json = json_decode($json, TRUE);
-        // dd($decoded_json);
 
         $simplified_list = [];
         $this->recur1($decoded_json, $simplified_list);
-        // dd($simplified_list);
 
         DB::beginTransaction();
         try {
@@ -50,7 +46,6 @@ class CategoryController extends Controller
             DB::commit();
             $info['success'] = TRUE;
         } catch (\Exception $e) {
-            dd($e);
             DB::rollback();
             $info['success'] = FALSE;
         }
@@ -143,7 +138,6 @@ class CategoryController extends Controller
                 DB::commit();
                 $info['success'] = TRUE;
             } catch (\Exception $e) {
-                dd($e);
                 DB::rollback();
                 $info['success'] = FALSE;
             }
