@@ -84,4 +84,6 @@ Route::get('category-subcategory/remove/{category_id}', 'CategoryController@remo
 
 Route::get('remember-me/login', 'LoginController@index')->name('remember-me.login');
 Route::post('remember-me/login/verify', 'LoginController@verify')->name('remember-me.login-verify');
+Route::get('remember-me/logout', 'LoginController@logout')->name('remember-me.logout');
+
 Route::get('remember-me/dashboard', 'DashboardController@index')->name('dashboard');
