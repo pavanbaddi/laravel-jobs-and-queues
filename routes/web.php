@@ -79,3 +79,9 @@ Route::post('category-subcategory/save', 'CategoryController@store')->name('cate
 Route::get('category-subcategory/edit/{category_id}', 'CategoryController@edit')->name('category-subcategory.edit');
 Route::get('category-subcategory/remove/{category_id}', 'CategoryController@remove')->name('category-subcategory.remove');
  
+
+// Remember Me
+
+Route::get('remember-me/login', 'LoginController@index')->name('remember-me.login');
+Route::post('remember-me/login/verify', 'LoginController@verify')->name('remember-me.login-verify');
+Route::get('remember-me/dashboard', 'DashboardController@index')->name('dashboard');
