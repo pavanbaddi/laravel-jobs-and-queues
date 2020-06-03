@@ -12,8 +12,6 @@
             color: red;
         }
     </style>
-
-    @stack('styles')
 </head>
 <body>
 
@@ -49,11 +47,5 @@
         </div>
     </div>
 
-
-    <script src="{{ url('assets/js/jquery.min.js') }}" ></script>
-    <script src="{{ url('assets/js/popper.min.js') }}" ></script>
-    <script src="{{ url('assets/js/bootstrap.min.js') }}" ></script>
-
-    @stack('scripts')
 </body>
 </html>
