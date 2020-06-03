@@ -29,7 +29,6 @@ class LoginController extends Controller
         if(Auth::attempt($credential)){
             $user = User::where(["email" => $credential['email']])->first();
             
-            // Here 
             Auth::login($user, $remember_me);
 
             return redirect(route('dashboard'));
