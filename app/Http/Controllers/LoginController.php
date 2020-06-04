@@ -26,6 +26,7 @@ class LoginController extends Controller
 
         // dd($remember_me);
 
+        
         if(Auth::attempt($credential)){
             $user = User::where(["email" => $credential['email']])->first();
             
