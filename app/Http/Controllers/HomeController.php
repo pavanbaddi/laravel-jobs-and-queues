@@ -158,5 +158,15 @@ class HomeController extends Controller
 
         dd($validated_data);
     }
+
+    public function turboLogin(){
+        $info = [];
+        return view('turbolinks.login', $info);
+    }
+
+    public function turboDashboard(){
+        $info = [];
+        return view('turbolinks.dashboard', $info);
+    }
 }
 

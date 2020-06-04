@@ -87,3 +87,10 @@ Route::post('remember-me/login/verify', 'LoginController@verify')->name('remembe
 Route::get('remember-me/logout', 'LoginController@logout')->name('remember-me.logout');
 
 Route::get('remember-me/dashboard', 'DashboardController@index')->name('dashboard');
+
+
+// Turbolinks
+Route::group(['prefix' => "turbolinks"], function () {
+       Route::get('', 'HomeController@turboLogin');
+       Route::get('/dashboard', 'HomeController@turboDashboard');
+});

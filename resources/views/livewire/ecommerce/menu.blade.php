@@ -22,7 +22,11 @@
             
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('ecommerce.cart-items') }}">Cart</a>
-            </li>    
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('ecommerce.test') }}">Test link</a>
+            </li>
         </ul>
     </div>  
 </nav>
